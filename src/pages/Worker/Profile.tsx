@@ -8,6 +8,7 @@ import styled from "styled-components";
 import ProfileCard from "./../../components/ProfileCard";
 import VacancyCard from "./../../components/VacancyCard";
 import LevelCard from "../../components/LevelCard";
+import { User } from "../../API/types/payload/User";
 
 const professions = [
     { id: 0, name: "Сварщик", selected: true},
@@ -18,7 +19,7 @@ const professions = [
     { name: "Разнорабочий", selected: true}
 ];
 
-const user = {
+const user: User = {
     id: 0,
     firstName: "Иван",
     LastName: "Иванов",
@@ -41,7 +42,7 @@ const vacancy = {
 }
 
 export default function Profile() {
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState<User|null>(null);
     useEffect(() => {
         const f = async ()=>{
             const clientData = await ClientController.getMe();
@@ -114,7 +115,7 @@ export default function Profile() {
                             ))}
                         </IonCardContent>
                     </IonCard>
-                    <LevelCard level={user.level}></LevelCard>
+                    <LevelCard level={user?.level}></LevelCard>
                 </IonContent>
             </IonPage>
         </>
