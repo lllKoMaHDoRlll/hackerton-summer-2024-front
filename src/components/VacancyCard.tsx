@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { IonCard, IonCardTitle, IonAvatar, IonCardContent, IonCardHeader, IonCardSubtitle, IonList, IonListHeader, IonLabel, IonItem, IonText, IonChip, IonButton } from "@ionic/react"
 
 
@@ -6,8 +6,12 @@ import styled from "styled-components";
 
 
 export default function ProfileCard(props: any) {
+    useEffect(() => {
+        console.log(props.isAssigned);
+    });
+
     return (
-        <IonCard className="ion-padding-start ion-padding-top">
+        <IonCard className="ion-padding">
             <IonCardHeader>
                 <IonCardSubtitle>Оплата: {props.data.price} руб.</IonCardSubtitle>
                 <IonCardTitle>{props.data.workName}</IonCardTitle>
@@ -32,7 +36,7 @@ export default function ProfileCard(props: any) {
                     </IonItem>
                 </IonList>
             </IonCardContent>
-            <IonButton expand="block">Откликнуться</IonButton>
+            <IonButton expand="block">{props.isAssigned ? 'Отменить' : 'Откликнуться'}</IonButton>
         </IonCard>
     )
 }

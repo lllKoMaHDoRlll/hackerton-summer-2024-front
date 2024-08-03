@@ -5,6 +5,7 @@ import { map, build, home, personAdd, star } from "ionicons/icons"
 import styled from "styled-components";
 
 import ProfileCard from "./../../components/ProfileCard";
+import VacancyCard from "./../../components/VacancyCard";
 
 const professions = [
     { id: 0, name: "Сварщик", selected: true},
@@ -20,6 +21,20 @@ const user = {
     firstName: "",
     LastName: "",
     email: ""
+}
+
+const vacancy = {
+    id: 0,
+    workName: "Изготовление металлической фермы",
+    price: "5 000",
+    workDescription: "Изготволение фермы из металлических балок путим полуавтоматической сварки",
+    availableVacancies: 3,
+    professions: [
+        {
+            id: 0,
+            name: "Сварщик"
+        }
+    ]
 }
 
 export default function Profile() {
@@ -75,6 +90,12 @@ export default function Profile() {
                             ))}
                         </IonCardContent>
                     </IonCard>
+                    {vacancy && 
+                        <>
+                            <IonTitle>Текущая задача:</IonTitle>
+                            <VacancyCard data={vacancy} isAssigned={true}></VacancyCard>
+                        </>
+                        }
                 </IonContent>
             </IonPage>
         </>
