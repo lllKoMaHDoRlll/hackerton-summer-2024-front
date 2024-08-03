@@ -1,13 +1,28 @@
 import React, { useRef } from "react";
-import { IonBackButton, IonPage, IonTitle, IonHeader, IonToolbar, IonButtons, IonContent, IonCardContent, IonCard, IonList, IonItem, IonListHeader, IonLabel, IonCardHeader, IonCardTitle, IonCardSubtitle, IonButton, IonModal, IonIcon } from "@ionic/react";
+import { IonBackButton, IonPage, IonTitle, IonHeader, IonToolbar, IonButtons, IonContent, IonCardContent, IonCard, IonList, IonItem, IonListHeader, IonLabel, IonCardHeader, IonCardTitle, IonCardSubtitle, IonButton, IonModal, IonIcon, IonFab, IonFabButton, IonInput, IonSelect, IonSelectOption } from "@ionic/react";
 
-import styled from "styled-components";
-import PartnerMap from "../../components/PartnersMap";
-import EducationalCourseCard from "../../components/EducationalCourseCard";
 import VacancyCard from "../../components/VacancyCard";
 
-import { person } from "ionicons/icons";
+import { person, add } from "ionicons/icons";
 
+const professions = [
+    {
+        id: 0,
+        name: "Сварщик"
+    },
+    {
+        id: 1,
+        name: "Бетонщик"
+    },
+    {
+        id: 2,
+        name: "Стекольщик"
+    },
+    {
+        id: 3,
+        name: "Монтажник"
+    },
+]
 
 const objects = [
     {
@@ -92,6 +107,11 @@ export default function BuilderObjects() {
                         </IonItem>
                     ))} 
                 </IonList>
+                <IonFab slot="fixed" vertical="bottom" horizontal="end">
+                    <IonFabButton id="create-object-modal">
+                        <IonIcon icon={add}></IonIcon>
+                    </IonFabButton>
+                </IonFab>
                 {objects.map((object) => (
                     <IonModal ref={modal} trigger={"modal-id-" + object.id} initialBreakpoint={0.25} breakpoints={[0, 0.25, 0.5, 0.75]}>
                         <IonContent className="ion-padding">
@@ -108,6 +128,40 @@ export default function BuilderObjects() {
                         </IonContent>
                     </IonModal>
                 ))}
+                <IonModal ref={modal} trigger="create-object-modal" initialBreakpoint={0.75} breakpoints={[0, 0.25, 0.5, 0.75, 1.0]}>
+                    <IonContent className="ion-padding">
+                        <IonList>
+                            <IonHeader>
+                                <IonTitle className="ion-text-center ion-padding">
+                                    Создать Объект
+                                </IonTitle>
+                            </IonHeader>
+                            <IonItem>
+                                <IonInput label="Название Объекта" labelPlacement="floating" type="text" />
+                            </IonItem>
+                            <IonItem>
+                                <IonInput label="Описание" labelPlacement="floating" type="text" />
+                            </IonItem>
+                            <IonItem>
+                                <IonInput label="Число Рабочих" labelPlacement="floating" type="number" />
+                            </IonItem>
+                            <IonItem>
+                                <IonInput label="Оклад" labelPlacement="floating" type="number" />
+                            </IonItem>
+                            <IonItem>
+                                <IonInput label="Число Рабочих" labelPlacement="floating" type="number" />
+                            </IonItem>
+                            <IonItem>
+                                <IonSelect label="Необходимые специалисты" labelPlacement="floating" multiple={true}>
+                                    {professions.map((profession) => (
+                                        <IonSelectOption value={profession.id}>{profession.name}</IonSelectOption>
+                                    ))}
+                                </IonSelect>
+                            </IonItem>
+                        </IonList>
+                        <IonButton expand="block" onClick={() => modal.current?.dismiss()}>Создать</IonButton>
+                    </IonContent>
+                </IonModal>
             </IonContent>
         </IonPage>
     )
