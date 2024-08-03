@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { IonButton, IonContent, IonInput, IonList, IonPage,IonHeader, IonToolbar, IonTitle, IonCard, IonItem, IonCardHeader, IonCardContent } from "@ionic/react";
+import { IonButton, IonContent, IonInput, IonList, IonPage,IonHeader, IonToolbar, IonTitle, IonCard, IonItem, IonCardHeader, IonCardContent, useIonRouter } from "@ionic/react";
 
 
 const Wrapper = styled.div`
@@ -15,6 +15,9 @@ const Wrapper = styled.div`
 `
 
 export default function Auth() {
+    const nav = useIonRouter();
+    const goToReg = ()=>nav.push('/reg');
+
     return (
         <IonPage>
             <IonHeader>
@@ -37,7 +40,7 @@ export default function Auth() {
                             </IonList>
                         </IonCardContent>
                     </IonCard>
-                    <IonButton fill="clear" expand="block">Зарегистрироваться</IonButton>
+                    <IonButton fill="clear" expand="block" onClick={goToReg}>Зарегистрироваться</IonButton>
                     <IonButton expand="block">Войти</IonButton>
                     </Wrapper>
             </IonContent>
