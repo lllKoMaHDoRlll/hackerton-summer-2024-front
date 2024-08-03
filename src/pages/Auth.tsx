@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import styled from "styled-components";
-import { IonButton, IonContent, IonInput, IonList, IonPage,IonHeader, IonToolbar, IonTitle, IonCard, IonItem, IonCardHeader, IonCardContent, useIonRouter } from "@ionic/react";
+import { IonButton, IonContent, IonInput, IonList, IonPage,IonHeader, IonToolbar, IonTitle, IonCard, IonItem, IonCardHeader, IonCardContent, useIonRouter, IonCardTitle } from "@ionic/react";
 
 
 const Wrapper = styled.div`
@@ -45,14 +45,18 @@ export default function Auth() {
             <IonContent fullscreen>
                 <Wrapper>
                     <IonCard>
-                        <IonCardHeader>Войти</IonCardHeader>
+                        <IonCardHeader>
+                            <IonCardTitle>
+                                Войти
+                            </IonCardTitle>
+                        </IonCardHeader>
                         <IonCardContent>
                             <IonList>
                                 <IonItem>
-                                    <IonInput ref={values.email} placeholder="Почта" type="email" onInput={onChangeCheck}></IonInput>
+                                    <IonInput ref={values.email} label="Почта" labelPlacement="floating" type="email" onInput={onChangeCheck}></IonInput>
                                 </IonItem>
                                 <IonItem>
-                                    <IonInput ref={values.password} placeholder="Пароль" type="password" onInput={onChangeCheck}></IonInput>
+                                    <IonInput ref={values.password} label="Пароль" labelPlacement="floating" type="password" onInput={onChangeCheck}></IonInput>
                                 </IonItem>
                             </IonList>
                         </IonCardContent>
