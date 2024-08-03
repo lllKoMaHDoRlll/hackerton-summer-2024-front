@@ -1,4 +1,3 @@
-import React from "react";
 import { IonCard, IonCardTitle, IonAvatar, IonCardContent } from "@ionic/react"
 
 

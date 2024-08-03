@@ -1,8 +1,6 @@
-import React from "react";
-import { IonLabel, IonContent, IonHeader, IonMenu, IonPage, IonTitle, IonToolbar, IonButton, IonButtons, IonMenuButton, IonCard, IonCardTitle, IonAvatar, IonCardContent, IonList, IonItem, IonIcon, useIonRouter, IonMenuToggle } from "@ionic/react"
-import { map, build, home, personAdd } from "ionicons/icons"
+import { IonLabel, IonContent, IonHeader, IonMenu, IonPage, IonTitle, IonToolbar, IonButtons, IonMenuButton, IonList, IonItem, IonIcon, useIonRouter, IonMenuToggle } from "@ionic/react"
+import { build, home, personAdd } from "ionicons/icons"
 
-import styled from "styled-components";
 
 import ProfileCard from "./../../components/ProfileCard";
 

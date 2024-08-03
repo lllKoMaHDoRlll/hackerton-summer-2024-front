@@ -1,13 +1,9 @@
-import React from "react";
-import { IonBackButton, IonPage, IonTitle, IonHeader, IonToolbar, IonButtons, IonContent, IonCardContent, IonCard, IonList, IonItem, IonListHeader, IonLabel, IonCardHeader, IonCardTitle, IonCardSubtitle, IonButton } from "@ionic/react";
+import { IonBackButton, IonPage, IonTitle, IonHeader, IonToolbar, IonButtons, IonContent, IonList, IonItem, IonListHeader, IonLabel } from "@ionic/react";
 
-import styled from "styled-components";
 import PartnerMap from "../../components/PartnersMap";
 import EducationalCourseCard from "../../components/EducationalCourseCard";
 
-const MapFrame = styled.iframe`
-    width: 100%;
-`
+
 
 const courses = [
     {
@@ -61,9 +57,6 @@ export default function MapOfPartners() {
             <IonContent>
                 <PartnerMap></PartnerMap>
                 <IonList>
-                    <IonListHeader>
-                        <IonLabel>Партнеры</IonLabel>
-                    </IonListHeader>
                     {courses.map((course) => (
                         <IonItem>
                             <EducationalCourseCard 

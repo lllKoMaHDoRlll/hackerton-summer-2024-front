@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { IonBackButton, IonPage, IonTitle, IonHeader, IonToolbar, IonButtons, IonContent, IonCardContent, IonCard, IonList, IonItem, IonListHeader, IonLabel, IonCardHeader, IonCardTitle, IonCardSubtitle, IonButton, IonModal, IonIcon, IonFab, IonFabButton, IonInput, IonSelect, IonSelectOption } from "@ionic/react";
+import { IonBackButton, IonPage, IonTitle, IonHeader, IonToolbar, IonButtons, IonContent, IonList, IonItem, IonLabel, IonModal, IonIcon, IonFab, IonFabButton, IonInput, IonSelect, IonSelectOption, IonButton } from "@ionic/react";
 
 import VacancyCard from "../../components/VacancyCard";
 

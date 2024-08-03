@@ -1,9 +1,5 @@
-import React from "react";
-import { IonCardContent, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonButton, IonText, IonLabel, IonGrid, IonRoute, IonRow, IonCol, IonImg } from "@ionic/react";
+import { IonCardContent, IonCard, IonCardHeader, IonCardTitle, IonButton, IonText, IonLabel, IonGrid, IonRow, IonCol, IonImg } from "@ionic/react";
 import { usePhotoGallery } from '../hooks/usePhotoGallery';
-
-import styled from "styled-components";
-
 
 export default function LevelCard(props: any) {
     const { photos, takePhoto } = usePhotoGallery();

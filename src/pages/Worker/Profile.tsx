@@ -1,8 +1,5 @@
-import React, { useState } from "react";
-import { IonLabel, IonContent, IonHeader, IonMenu, IonPage, IonTitle, IonToolbar, IonButton, IonButtons, IonMenuButton, IonCard, IonCardTitle, IonAvatar, IonCardContent, IonList, IonItem, IonIcon, IonChip, useIonRouter, IonMenuToggle, IonCardHeader, IonCardSubtitle } from "@ionic/react"
-import { map, build, home, personAdd, star } from "ionicons/icons"
-
-import styled from "styled-components";
+import { IonLabel, IonContent, IonHeader, IonMenu, IonPage, IonTitle, IonToolbar, IonButtons, IonMenuButton, IonCard, IonCardTitle, IonCardContent, IonList, IonItem, IonIcon, IonChip, useIonRouter, IonMenuToggle, IonCardHeader, IonCardSubtitle } from "@ionic/react"
+import { map, personAdd } from "ionicons/icons"
 
 import ProfileCard from "./../../components/ProfileCard";
 import VacancyCard from "./../../components/VacancyCard";

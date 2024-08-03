@@ -1,4 +1,3 @@
-import React from "react";
 import { IonCardContent, IonCard } from "@ionic/react";
 
 import styled from "styled-components";
