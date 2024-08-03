@@ -10,15 +10,12 @@ import ProgressBar from './pages/Worker/ProgressBar';
 import EmployerProfile from './pages/Employer/Profile';
 import PotentialWorkers from './pages/Employer/PotentialWorkers';
 
-/* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
 
-/* Basic CSS for apps built with Ionic */
 import '@ionic/react/css/normalize.css';
 import '@ionic/react/css/structure.css';
 import '@ionic/react/css/typography.css';
 
-/* Optional CSS utils that can be commented out */
 import '@ionic/react/css/padding.css';
 import '@ionic/react/css/float-elements.css';
 import '@ionic/react/css/text-alignment.css';
@@ -26,22 +23,11 @@ import '@ionic/react/css/text-transformation.css';
 import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
 
-/**
- * Ionic Dark Mode
- * -----------------------------------------------------
- * For more info, please see:
- * https://ionicframework.com/docs/theming/dark-mode
- */
-
-/* import '@ionic/react/css/palettes/dark.always.css'; */
-/* import '@ionic/react/css/palettes/dark.class.css'; */
 import '@ionic/react/css/palettes/dark.system.css';
 
-/* Theme variables */
-import './theme/variables.css';
 import Reg from './pages/Reg';
 import Auth from './pages/Auth';
-import MapOfPartners from './pages/Employer/MapOfPartners';
+import MapOfPartners from './pages/Worker/MapOfPartners';
 import CRUDvacancies from './pages/Employer/CRUDvacancies';
 import CRUDobjects from './pages/Employer/CRUDobjects';
 import BuilderObjects from './pages/Employer/BuilderObjects';
@@ -83,6 +69,10 @@ const App: React.FC = () => (
           <ProgressBar/>
         </Route>
 
+        <Route exact path='/worker/map_of_partners'>
+          <MapOfPartners/>
+        </Route>
+
       {/*Работодатель*/}
       <Route exact path='/employer/profile'>
         {/* <Route exact path='/profile'> */}
@@ -91,10 +81,6 @@ const App: React.FC = () => (
 
         <Route exact path='/employer/potential_workers'>
           <PotentialWorkers/>
-        </Route>
-
-        <Route exact path='/employer/map_of_partners'>
-          <MapOfPartners/>
         </Route>
 
         <Route exact path='/employer/crud_vacancies'>
