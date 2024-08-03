@@ -1,5 +1,5 @@
-import React from "react";
-import { IonLabel, IonContent, IonHeader, IonMenu, IonPage, IonTitle, IonToolbar, IonButton, IonButtons, IonMenuButton, IonCard, IonCardTitle, IonAvatar, IonCardContent, IonList, IonItem, IonIcon, IonChip } from "@ionic/react"
+import React, { useState } from "react";
+import { IonLabel, IonContent, IonHeader, IonMenu, IonPage, IonTitle, IonToolbar, IonButton, IonButtons, IonMenuButton, IonCard, IonCardTitle, IonAvatar, IonCardContent, IonList, IonItem, IonIcon, IonChip, useIonRouter, IonMenuToggle } from "@ionic/react"
 import { map, build, home, personAdd, star } from "ionicons/icons"
 
 import styled from "styled-components";
@@ -41,6 +41,11 @@ export default function Profile() {
     const handleProffesionSwitch = function (ev: any) {
         ev.target.color = ev.target.color === 'dark' ? 'default' : 'dark';
     }
+    const nav = useIonRouter();
+
+    const goToMap = ()=>{
+        nav.push('/worker/map_of_partners');
+    }
 
     return (
         <>
@@ -52,22 +57,24 @@ export default function Profile() {
                 </IonHeader>
                 <IonContent>
                     <IonList>
-                        <IonItem>
-                            <IonIcon aria-hidden="true" icon={map} slot="start" />
-                            <IonLabel>Карта Партнеров</IonLabel>
-                        </IonItem>
-                        <IonItem>
-                            <IonIcon aria-hidden="true" icon={build} slot="start" />
-                            <IonLabel>Текущий Объект</IonLabel>
-                        </IonItem>
-                        <IonItem>
-                            <IonIcon aria-hidden="true" icon={star} slot="start" />
-                            <IonLabel>Бонусы</IonLabel>
-                        </IonItem>
-                        <IonItem>
-                            <IonIcon aria-hidden="true" icon={personAdd} slot="start" />
-                            <IonLabel>Вакансии</IonLabel>
-                        </IonItem>
+                        <IonMenuToggle>
+                            <IonItem onClick={goToMap}>
+                                <IonIcon aria-hidden="true" icon={map} slot="start" />
+                                <IonLabel>Карта Партнеров</IonLabel>
+                            </IonItem>
+                            <IonItem>
+                                <IonIcon aria-hidden="true" icon={build} slot="start" />
+                                <IonLabel>Текущий Объект</IonLabel>
+                            </IonItem>
+                            <IonItem>
+                                <IonIcon aria-hidden="true" icon={star} slot="start" />
+                                <IonLabel>Бонусы</IonLabel>
+                            </IonItem>
+                            <IonItem>
+                                <IonIcon aria-hidden="true" icon={personAdd} slot="start" />
+                                <IonLabel>Вакансии</IonLabel>
+                            </IonItem>
+                        </IonMenuToggle>
                     </IonList>
                 </IonContent>
             </IonMenu>
