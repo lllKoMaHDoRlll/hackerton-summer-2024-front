@@ -30,7 +30,6 @@ export default function Reg() {
     const registerButton = useRef<HTMLIonButtonElement>(null);
 
     const onChangeCheck = (ev: any) => {
-        console.log(registerButton);
         if (!!values.firstName.current?.value && !!values.lastName.current?.value && !!values.middleName.current?.value && !!values.email.current?.value && !!values.password.current?.value && !!values.passwordRepeat.current?.value && !!values.role.current?.value) {
             if (values.password.current?.value == values.passwordRepeat.current?.value) {
                 registerButton.current!.disabled = false;

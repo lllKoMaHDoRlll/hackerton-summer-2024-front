@@ -26,7 +26,6 @@ export default function Auth() {
     const registerButton = useRef<HTMLIonButtonElement>(null);
 
     const onChangeCheck = (ev: any) => {
-        console.log(registerButton);
         if (!!values.email.current?.value && !!values.password.current?.value) {
             registerButton.current!.disabled = false;
             return;
