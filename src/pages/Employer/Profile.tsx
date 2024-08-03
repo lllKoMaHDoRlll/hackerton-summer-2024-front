@@ -1,5 +1,5 @@
 import React from "react";
-import { IonLabel, IonContent, IonHeader, IonMenu, IonPage, IonTitle, IonToolbar, IonButton, IonButtons, IonMenuButton, IonCard, IonCardTitle, IonAvatar, IonCardContent, IonList, IonItem, IonIcon } from "@ionic/react"
+import { IonLabel, IonContent, IonHeader, IonMenu, IonPage, IonTitle, IonToolbar, IonButton, IonButtons, IonMenuButton, IonCard, IonCardTitle, IonAvatar, IonCardContent, IonList, IonItem, IonIcon, useIonRouter, IonMenuToggle } from "@ionic/react"
 import { map, build, home, personAdd } from "ionicons/icons"
 
 import styled from "styled-components";
@@ -14,6 +14,12 @@ const user = {
 }
 
 export default function Profile() {
+    const nav = useIonRouter();
+
+    const goToObjects = () => {
+        nav.push("/employer/builder_projects");
+    };
+
     return (
         <>
             <IonMenu contentId="main-content">
@@ -24,18 +30,20 @@ export default function Profile() {
                 </IonHeader>
                 <IonContent>
                     <IonList>
-                        <IonItem>
-                            <IonIcon aria-hidden="true" icon={build} slot="start" />
-                            <IonLabel>Рабочиe</IonLabel>
-                        </IonItem>
-                        <IonItem>
-                            <IonIcon aria-hidden="true" icon={home} slot="start" />
-                            <IonLabel>Объекты</IonLabel>
-                        </IonItem>
-                        <IonItem>
-                            <IonIcon aria-hidden="true" icon={personAdd} slot="start" />
-                            <IonLabel>Вакансии</IonLabel>
-                        </IonItem>
+                        <IonMenuToggle>
+                            <IonItem style={{"cursor": "pointer"}}>
+                                <IonIcon aria-hidden="true" icon={build} slot="start" />
+                                <IonLabel>Рабочиe</IonLabel>
+                            </IonItem>
+                            <IonItem style={{"cursor": "pointer"}} onClick={goToObjects}>
+                                <IonIcon aria-hidden="true" icon={home} slot="start" />
+                                <IonLabel>Объекты</IonLabel>
+                            </IonItem>
+                            <IonItem style={{"cursor": "pointer"}}>
+                                <IonIcon aria-hidden="true" icon={personAdd} slot="start" />
+                                <IonLabel>Вакансии</IonLabel>
+                            </IonItem>
+                        </IonMenuToggle>
                     </IonList>
                 </IonContent>
             </IonMenu>
