@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
-import { IonButton, IonContent, IonInput, IonList, IonPage,IonHeader, IonToolbar, IonTitle, IonCard, IonItem, IonCardHeader, IonCardContent, useIonRouter } from "@ionic/react";
+import { IonButton, IonContent, IonInput, IonList, IonPage,IonHeader, IonToolbar, IonTitle, IonCard, IonItem, IonCardHeader, IonCardContent, useIonRouter, IonCardTitle } from "@ionic/react";
 import {AuthController} from "../API/Endpoint";
 
 
@@ -19,6 +19,22 @@ export default function Auth() {
     const nav = useIonRouter();
     const goToReg = ()=>nav.push('/reg');
 
+    const [values, setValues] = useState({
+        email: useRef<HTMLIonInputElement>(null), 
+        password: useRef<HTMLIonInputElement>(null)
+    });
+
+    const registerButton = useRef<HTMLIonButtonElement>(null);
+
+    const onChangeCheck = (ev: any) => {
+        if (!!values.email.current?.value && !!values.password.current?.value) {
+            registerButton.current!.disabled = false;
+            return;
+        }
+        registerButton.current!.disabled = true;
+        return;
+    }
+
     return (
         <IonPage>
             <IonHeader>
@@ -29,20 +45,24 @@ export default function Auth() {
             <IonContent fullscreen>
                 <Wrapper>
                     <IonCard>
-                        <IonCardHeader>Войти</IonCardHeader>
+                        <IonCardHeader>
+                            <IonCardTitle>
+                                Войти
+                            </IonCardTitle>
+                        </IonCardHeader>
                         <IonCardContent>
                             <IonList>
                                 <IonItem>
-                                    <IonInput placeholder="Почта" type="email"></IonInput>
+                                    <IonInput ref={values.email} label="Почта" labelPlacement="floating" type="email" onInput={onChangeCheck}></IonInput>
                                 </IonItem>
                                 <IonItem>
-                                    <IonInput placeholder="Пароль" type="password"></IonInput>
+                                    <IonInput ref={values.password} label="Пароль" labelPlacement="floating" type="password" onInput={onChangeCheck}></IonInput>
                                 </IonItem>
                             </IonList>
                         </IonCardContent>
                     </IonCard>
                     <IonButton fill="clear" expand="block" onClick={goToReg}>Зарегистрироваться</IonButton>
-                    <IonButton expand="block" onClick={()=>AuthController.Login()}>Войти</IonButton>
+                    <IonButton ref={registerButton} expand="block" onClick={()=>AuthController.Login()}>Войти</IonButton>
                     </Wrapper>
             </IonContent>
         </IonPage>

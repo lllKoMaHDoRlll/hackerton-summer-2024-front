@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { IonLabel, IonContent, IonHeader, IonMenu, IonPage, IonTitle, IonToolbar, IonButton, IonButtons, IonMenuButton, IonCard, IonCardTitle, IonAvatar, IonCardContent, IonList, IonItem, IonIcon, IonChip, useIonRouter, IonMenuToggle } from "@ionic/react"
+import { IonLabel, IonContent, IonHeader, IonMenu, IonPage, IonTitle, IonToolbar, IonButton, IonButtons, IonMenuButton, IonCard, IonCardTitle, IonAvatar, IonCardContent, IonList, IonItem, IonIcon, IonChip, useIonRouter, IonMenuToggle, IonCardHeader, IonCardSubtitle } from "@ionic/react"
 import { map, build, home, personAdd, star } from "ionicons/icons"
 import { ClientController } from "../../API/Endpoint";
 
@@ -59,6 +59,10 @@ export default function Profile() {
         nav.push('/worker/map_of_partners');
     }
 
+    const goToVacancies = () => {
+        nav.push('/worker/tasks');
+    }
+
     return (
         <>
             <IonMenu contentId="main-content">
@@ -70,19 +74,11 @@ export default function Profile() {
                 <IonContent>
                     <IonList>
                         <IonMenuToggle>
-                            <IonItem onClick={goToMap}>
+                            <IonItem style={{"cursor": "pointer"}} onClick={goToMap}>
                                 <IonIcon aria-hidden="true" icon={map} slot="start" />
                                 <IonLabel>Карта Партнеров</IonLabel>
                             </IonItem>
-                            <IonItem>
-                                <IonIcon aria-hidden="true" icon={build} slot="start" />
-                                <IonLabel>Текущий Объект</IonLabel>
-                            </IonItem>
-                            <IonItem>
-                                <IonIcon aria-hidden="true" icon={star} slot="start" />
-                                <IonLabel>Бонусы</IonLabel>
-                            </IonItem>
-                            <IonItem>
+                            <IonItem style={{"cursor": "pointer"}} onClick={goToVacancies}>
                                 <IonIcon aria-hidden="true" icon={personAdd} slot="start" />
                                 <IonLabel>Вакансии</IonLabel>
                             </IonItem>
@@ -108,7 +104,10 @@ export default function Profile() {
                         </>
                     }
                     <IonCard className="ion-padding">
-                        <IonCardTitle>Ваши профессии</IonCardTitle>
+                        <IonCardHeader>
+                            <IonCardTitle>Ваши профессии</IonCardTitle>
+                            <IonCardSubtitle>Для изменения нажмите на профессию</IonCardSubtitle>
+                        </IonCardHeader>
                         <IonCardContent>
                             {professions.map((profession) => (
                                 <IonChip onClick={handleProffesionSwitch} color={profession.selected ? 'dark' : 'default'}>{profession.name}</IonChip>

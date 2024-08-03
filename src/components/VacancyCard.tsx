@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
-import { IonCard, IonCardTitle, IonAvatar, IonCardContent, IonCardHeader, IonCardSubtitle, IonList, IonListHeader, IonLabel, IonItem, IonText, IonChip, IonButton } from "@ionic/react"
-
-
+import { useEffect } from "react";
+import { IonCard, IonCardTitle, IonCardContent, IonCardHeader, IonCardSubtitle, IonList, IonListHeader, IonLabel, IonItem, IonText, IonChip, IonButton } from "@ionic/react"
 import styled from "styled-components";
 
+const StyledCard = styled(IonCard)`
+    width: 100%;
+`
 
 export default function ProfileCard(props: any) {
     useEffect(() => {
@@ -11,7 +12,7 @@ export default function ProfileCard(props: any) {
     });
 
     return (
-        <IonCard className="ion-padding">
+        <StyledCard className="ion-padding">
             <IonCardHeader>
                 <IonCardSubtitle>Оплата: {props.data.price} руб.</IonCardSubtitle>
                 <IonCardTitle>{props.data.workName}</IonCardTitle>
@@ -43,6 +44,6 @@ export default function ProfileCard(props: any) {
             </IonCardContent>
             <IonButton expand="block">{(props.isAssigned || props.isOwnedByConsumer) ? 'Отменить' : 'Откликнуться'}</IonButton>
             
-        </IonCard>
+        </StyledCard>
     )
 }

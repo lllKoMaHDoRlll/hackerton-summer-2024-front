@@ -1,15 +1,14 @@
-import React from "react";
 import { IonCardContent, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonButton } from "@ionic/react";
 
 import styled from "styled-components";
 
-const MapFrame = styled.iframe`
+const StyledCard = styled(IonCard)`
     width: 100%;
 `
 
 export default function EducationalCourseCard(props: any) {
     return (
-        <IonCard className="ion-padding">
+        <StyledCard className="ion-padding">
             <IonCardHeader>
                 <IonCardTitle>{props.name}</IonCardTitle>
                 <IonCardSubtitle>{props.address}</IonCardSubtitle>
@@ -22,6 +21,6 @@ export default function EducationalCourseCard(props: any) {
                 </div>
             </IonCardContent>
             <IonButton expand="block">Связаться</IonButton>
-        </IonCard>
+        </StyledCard>
     )
 }
