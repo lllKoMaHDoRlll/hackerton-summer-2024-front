@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { IonButton, IonContent, IonInput, IonList, IonPage,IonHeader, IonToolbar, IonTitle, IonCard, IonItem, IonCardHeader, IonCardContent, useIonRouter } from "@ionic/react";
+import {AuthController} from "../API/Endpoint";
 
 
 const Wrapper = styled.div`
@@ -41,7 +42,7 @@ export default function Auth() {
                         </IonCardContent>
                     </IonCard>
                     <IonButton fill="clear" expand="block" onClick={goToReg}>Зарегистрироваться</IonButton>
-                    <IonButton expand="block">Войти</IonButton>
+                    <IonButton expand="block" onClick={()=>AuthController.Login()}>Войти</IonButton>
                     </Wrapper>
             </IonContent>
         </IonPage>
