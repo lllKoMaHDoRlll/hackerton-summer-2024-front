@@ -34,9 +34,15 @@ export default function ProfileCard(props: any) {
                             <IonChip>{profession.name}</IonChip>
                         ))}
                     </IonItem>
+                    {props.isOwnedByConsumer && 
+                        <IonItem>
+                            <IonButton id={"modal-id-" + props.data.id} expand="block" fill="outline">Просмотреть рабочих</IonButton>
+                        </IonItem>
+                    }
                 </IonList>
             </IonCardContent>
             <IonButton expand="block">{props.isAssigned ? 'Отменить' : 'Откликнуться'}</IonButton>
+            
         </IonCard>
     )
 }
