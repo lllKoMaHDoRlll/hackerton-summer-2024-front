@@ -6,6 +6,13 @@ import styled from "styled-components";
 
 import ProfileCard from "./../../components/ProfileCard";
 
+const user = {
+    id: 0,
+    firstName: "",
+    LastName: "",
+    email: ""
+}
+
 export default function Profile() {
     return (
         <>
@@ -42,7 +49,7 @@ export default function Profile() {
                     </IonToolbar>
                 </IonHeader>
                 <IonContent id="main-content" fullscreen>
-                    <ProfileCard></ProfileCard>
+                    <ProfileCard user={user}></ProfileCard>
                 </IonContent>
             </IonPage>
         </>

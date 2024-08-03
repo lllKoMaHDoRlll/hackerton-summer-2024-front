@@ -66,7 +66,7 @@ export default function Profile() {
                     </IonToolbar>
                 </IonHeader>
                 <IonContent id="main-content" fullscreen>
-                    <ProfileCard></ProfileCard>
+                    <ProfileCard user={user}></ProfileCard>
                     <IonCard className="ion-padding">
                         <IonCardTitle>Ваши профессии</IonCardTitle>
                         <IonCardContent>
