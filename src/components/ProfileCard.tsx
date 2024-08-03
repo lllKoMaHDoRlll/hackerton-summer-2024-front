@@ -8,16 +8,16 @@ const ProfileCardTitle = styled(IonCardTitle)`
     display: flex;
 `
 
-export default function ProfileCard() {
+export default function ProfileCard(props: any) {
     return (
         <IonCard className="ion-padding-start ion-padding-top">
             <ProfileCardTitle className="ion-align-items-center">
                 <IonAvatar className="ion-margin-end">
                     <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg"/>
                 </IonAvatar>
-                Иван Иванов
+                {props.user.firstName} {props.user.LastName}
             </ProfileCardTitle>
-            <IonCardContent>email: example@example.com</IonCardContent>
+            <IonCardContent>email: {props.user.email}</IonCardContent>
         </IonCard>
     )
 }

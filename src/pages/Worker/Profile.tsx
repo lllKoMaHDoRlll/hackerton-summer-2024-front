@@ -7,13 +7,20 @@ import styled from "styled-components";
 import ProfileCard from "./../../components/ProfileCard";
 
 const professions = [
-    { name: "Сварщик", selected: true},
+    { id: 0, name: "Сварщик", selected: true},
     { name: "Каменщик", selected: false},
     { name: "Плиточник", selected: false},
     { name: "Электромонтер", selected: true},
     { name: "Монтажник", selected: true},
     { name: "Разнорабочий", selected: true}
 ];
+
+const user = {
+    id: 0,
+    firstName: "",
+    LastName: "",
+    email: ""
+}
 
 export default function Profile() {
     const handleProffesionSwitch = function (ev: any) {
