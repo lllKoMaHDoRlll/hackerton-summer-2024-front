@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IonLabel, IonContent, IonHeader, IonMenu, IonPage, IonTitle, IonToolbar, IonButton, IonButtons, IonMenuButton, IonCard, IonCardTitle, IonAvatar, IonCardContent, IonList, IonItem, IonIcon, IonChip, useIonRouter, IonMenuToggle } from "@ionic/react"
 import { map, build, home, personAdd, star } from "ionicons/icons"
+import { ClientController } from "../../API/Endpoint";
 
 import styled from "styled-components";
 
@@ -40,6 +41,14 @@ const vacancy = {
 }
 
 export default function Profile() {
+    const [user, setUser] = useState(null);
+    useEffect(() => {
+        const f = async ()=>{
+            const clientData = await ClientController.getMe();
+        }
+        f();
+    }, [user]);
+
     const handleProffesionSwitch = function (ev: any) {
         ev.target.color = ev.target.color === 'dark' ? 'default' : 'dark';
     }
