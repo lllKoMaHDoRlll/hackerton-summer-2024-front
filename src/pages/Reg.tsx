@@ -1,5 +1,5 @@
 import React from "react";
-import { IonButton, IonContent, IonInput, IonList, IonPage,IonHeader, IonToolbar, IonTitle, IonCard, IonItem } from "@ionic/react";
+import { IonButton, IonContent, IonInput, IonList, IonPage,IonHeader, IonToolbar, IonTitle, IonCard, IonItem, IonSelect, IonSelectOption } from "@ionic/react";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -42,6 +42,12 @@ export default function Reg() {
                             </IonItem>
                             <IonItem>
                                 <IonInput placeholder="Повторите пароль" type="password"></IonInput>
+                            </IonItem>
+                            <IonItem>
+                                <IonSelect label="Ваша роль" labelPlacement="floating">
+                                    <IonSelectOption value='worker'>Рабочий</IonSelectOption>
+                                    <IonSelectOption value='employer'>Работодатель</IonSelectOption>
+                                </IonSelect>
                             </IonItem>
                         </IonList>
                     </IonCard>

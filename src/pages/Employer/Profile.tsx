@@ -18,10 +18,6 @@ export default function Profile() {
                 <IonContent>
                     <IonList>
                         <IonItem>
-                            <IonIcon aria-hidden="true" icon={map} slot="start" />
-                            <IonLabel>Карта Партнеров</IonLabel>
-                        </IonItem>
-                        <IonItem>
                             <IonIcon aria-hidden="true" icon={build} slot="start" />
                             <IonLabel>Рабочиe</IonLabel>
                         </IonItem>
