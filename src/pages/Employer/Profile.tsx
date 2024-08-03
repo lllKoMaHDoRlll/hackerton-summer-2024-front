@@ -8,9 +8,9 @@ import ProfileCard from "./../../components/ProfileCard";
 
 const user = {
     id: 0,
-    firstName: "",
-    LastName: "",
-    email: ""
+    firstName: "Иван",
+    LastName: "Иванов",
+    email: "example@example.com"
 }
 
 export default function Profile() {

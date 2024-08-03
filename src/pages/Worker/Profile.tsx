@@ -18,9 +18,9 @@ const professions = [
 
 const user = {
     id: 0,
-    firstName: "",
-    LastName: "",
-    email: ""
+    firstName: "Иван",
+    LastName: "Иванов",
+    email: "example@examle.com"
 }
 
 const vacancy = {
