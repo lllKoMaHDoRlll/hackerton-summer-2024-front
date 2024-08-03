@@ -4,9 +4,7 @@ import { map, build, home, personAdd } from "ionicons/icons"
 
 import styled from "styled-components";
 
-const ProfileCardTitle = styled(IonCardTitle)`
-    display: flex;
-`
+import ProfileCard from "./../../components/ProfileCard";
 
 export default function Profile() {
     return (
@@ -48,15 +46,7 @@ export default function Profile() {
                     </IonToolbar>
                 </IonHeader>
                 <IonContent id="main-content" fullscreen>
-                    <IonCard className="ion-padding-start ion-padding-top">
-                        <ProfileCardTitle className="ion-align-items-center">
-                            <IonAvatar className="ion-margin-end">
-                                <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg"/>
-                            </IonAvatar>
-                            Иван Иванов
-                        </ProfileCardTitle>
-                        <IonCardContent>email: example@example.com</IonCardContent>
-                    </IonCard>
+                    <ProfileCard></ProfileCard>
                 </IonContent>
             </IonPage>
         </>
