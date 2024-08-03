@@ -6,6 +6,7 @@ import styled from "styled-components";
 
 import ProfileCard from "./../../components/ProfileCard";
 import VacancyCard from "./../../components/VacancyCard";
+import LevelCard from "../../components/LevelCard";
 
 const professions = [
     { id: 0, name: "Сварщик", selected: true},
@@ -20,7 +21,8 @@ const user = {
     id: 0,
     firstName: "Иван",
     LastName: "Иванов",
-    email: "example@examle.com"
+    email: "example@examle.com",
+    level: 2
 }
 
 const vacancy = {
@@ -89,6 +91,12 @@ export default function Profile() {
                 </IonHeader>
                 <IonContent id="main-content" fullscreen>
                     <ProfileCard user={user}></ProfileCard>
+                    {vacancy && 
+                        <>
+                            <IonTitle>Текущая задача:</IonTitle>
+                            <VacancyCard data={vacancy} isAssigned={true}></VacancyCard>
+                        </>
+                    }
                     <IonCard className="ion-padding">
                         <IonCardTitle>Ваши профессии</IonCardTitle>
                         <IonCardContent>
@@ -97,12 +105,7 @@ export default function Profile() {
                             ))}
                         </IonCardContent>
                     </IonCard>
-                    {vacancy && 
-                        <>
-                            <IonTitle>Текущая задача:</IonTitle>
-                            <VacancyCard data={vacancy} isAssigned={true}></VacancyCard>
-                        </>
-                        }
+                    <LevelCard level={user.level}></LevelCard>
                 </IonContent>
             </IonPage>
         </>
