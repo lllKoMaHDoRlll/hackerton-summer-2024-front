@@ -41,7 +41,7 @@ export default function ProfileCard(props: any) {
                     }
                 </IonList>
             </IonCardContent>
-            <IonButton expand="block">{props.isAssigned ? 'Отменить' : 'Откликнуться'}</IonButton>
+            <IonButton expand="block">{(props.isAssigned || props.isOwnedByConsumer) ? 'Отменить' : 'Откликнуться'}</IonButton>
             
         </IonCard>
     )
