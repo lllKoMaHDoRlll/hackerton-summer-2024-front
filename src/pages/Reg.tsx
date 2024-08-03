@@ -1,5 +1,5 @@
-import React from "react";
-import { IonButton, IonContent, IonInput, IonList, IonPage,IonHeader, IonToolbar, IonTitle, IonCard, IonItem, IonSelect, IonSelectOption, useIonRouter } from "@ionic/react";
+import React, { useRef, useState } from "react";
+import { IonButton, IonContent, IonInput, IonList, IonPage,IonHeader, IonToolbar, IonTitle, IonCard, IonItem, IonSelect, IonSelectOption, useIonRouter, IonCardHeader, IonCardTitle, IonCardContent } from "@ionic/react";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -17,6 +17,32 @@ export default function Reg() {
     const nav = useIonRouter();
     const goToAuth = ()=>nav.push('/auth');
 
+    const [values, setValues] = useState({
+        firstName: useRef<HTMLIonInputElement>(null), 
+        lastName: useRef<HTMLIonInputElement>(null), 
+        middleName: useRef<HTMLIonInputElement>(null),
+        email: useRef<HTMLIonInputElement>(null),
+        password: useRef<HTMLIonInputElement>(null),
+        passwordRepeat: useRef<HTMLIonInputElement>(null),
+        role: useRef<HTMLIonSelectElement>(null)
+    });
+
+    const registerButton = useRef<HTMLIonButtonElement>(null);
+
+    const onChangeCheck = (ev: any) => {
+        console.log(registerButton);
+        if (!!values.firstName.current?.value && !!values.lastName.current?.value && !!values.middleName.current?.value && !!values.email.current?.value && !!values.password.current?.value && !!values.passwordRepeat.current?.value && !!values.role.current?.value) {
+            if (values.password.current?.value == values.passwordRepeat.current?.value) {
+                registerButton.current!.disabled = false;
+                return;
+            }
+            registerButton.current!.disabled = true;
+            return;
+        }
+        registerButton.current!.disabled = true;
+        return;
+    }
+
     return (
         <IonPage>
             <IonHeader>
@@ -26,36 +52,41 @@ export default function Reg() {
             </IonHeader>
             <IonContent fullscreen>
                 <Wrapper>
-                    <IonCard>
-                        <IonList>
-                            <IonItem>
-                                <IonInput placeholder="Фамилия" type="text"></IonInput>
-                            </IonItem>
-                            <IonItem>
-                                <IonInput placeholder="Имя" type="text"></IonInput>
-                            </IonItem>
-                            <IonItem>
-                                <IonInput placeholder="Отчество" type="text"></IonInput>
-                            </IonItem>
-                            <IonItem>
-                                <IonInput placeholder="Почта" type="email"></IonInput>
-                            </IonItem>
-                            <IonItem>
-                                <IonInput placeholder="Пароль" type="password"></IonInput>
-                            </IonItem>
-                            <IonItem>
-                                <IonInput placeholder="Повторите пароль" type="password"></IonInput>
-                            </IonItem>
-                            <IonItem>
-                                <IonSelect label="Ваша роль" labelPlacement="floating">
-                                    <IonSelectOption value='worker'>Рабочий</IonSelectOption>
-                                    <IonSelectOption value='employer'>Работодатель</IonSelectOption>
-                                </IonSelect>
-                            </IonItem>
-                        </IonList>
+                    <IonCard className="ion-padding">
+                        <IonCardHeader>
+                            <IonCardTitle>Регистрация</IonCardTitle>
+                        </IonCardHeader>
+                        <IonCardContent>
+                            <IonList>
+                                <IonItem>
+                                    <IonInput ref={values.firstName} name="firstName" onInput={onChangeCheck} label="Фамилия" labelPlacement="floating" type="text"></IonInput>
+                                </IonItem>
+                                <IonItem>
+                                    <IonInput ref={values.lastName} name="lastName" onInput={onChangeCheck} labelPlacement="floating" label="Имя" type="text"></IonInput>
+                                </IonItem>
+                                <IonItem>
+                                    <IonInput ref={values.middleName} name="middleName" onInput={onChangeCheck} labelPlacement="floating" label="Отчество" type="text"></IonInput>
+                                </IonItem>
+                                <IonItem>
+                                    <IonInput ref={values.email} name="email" onInput={onChangeCheck} labelPlacement="floating" label="Почта" type="email"></IonInput>
+                                </IonItem>
+                                <IonItem>
+                                    <IonInput ref={values.password} name="password" onInput={onChangeCheck} labelPlacement="floating" label="Пароль" type="password"></IonInput>
+                                </IonItem>
+                                <IonItem>
+                                    <IonInput ref={values.passwordRepeat} name="passwordRepeat" onInput={onChangeCheck} labelPlacement="floating" label="Повторите пароль" type="password"></IonInput>
+                                </IonItem>
+                                <IonItem className="ion-margin-bottom">
+                                    <IonSelect ref={values.role} name="role" label="Ваша роль" labelPlacement="floating"  onIonChange={onChangeCheck}>
+                                        <IonSelectOption value='worker'>Рабочий</IonSelectOption>
+                                        <IonSelectOption value='employer'>Работодатель</IonSelectOption>
+                                    </IonSelect>
+                                </IonItem>
+                            </IonList>
+                        </IonCardContent>
+                        <IonButton fill="outline" expand="block" onClick={goToAuth}>У меня есть аккант</IonButton>
+                        <IonButton ref={registerButton} expand="block" disabled>Зарегистрироваться</IonButton>
                     </IonCard>
-                    <IonButton fill="outline" expand="block" onClick={goToAuth}>У меня есть аккант</IonButton>
-                    <IonButton expand="block">Зарегистрироваться</IonButton>
                     </Wrapper>
             </IonContent>
         </IonPage>
