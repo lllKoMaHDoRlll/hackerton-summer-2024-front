@@ -5,6 +5,7 @@ import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera
 import { Filesystem, Directory } from '@capacitor/filesystem';
 import { Preferences } from '@capacitor/preferences';
 import { Capacitor } from '@capacitor/core';
+import { ClientController } from '../API/Endpoint';
 
 const PHOTO_STORAGE = 'photos';
 
@@ -78,6 +79,7 @@ export function usePhotoGallery() {
         const newPhotos = [savedFileImage, ...photos];
         setPhotos(newPhotos);
         Preferences.set({ key: PHOTO_STORAGE, value: JSON.stringify(newPhotos) });
+        await ClientController.putGradeUp();
     };
   
     return {

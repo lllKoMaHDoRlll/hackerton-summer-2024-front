@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { createContext, useEffect, useLayoutEffect, useState } from "react";
 import { IonLabel, IonContent, IonHeader, IonMenu, IonPage, IonTitle, IonToolbar, IonButton, IonButtons, IonMenuButton, IonCard, IonCardTitle, IonAvatar, IonCardContent, IonList, IonItem, IonIcon, IonChip, useIonRouter, IonMenuToggle, IonCardHeader, IonCardSubtitle } from "@ionic/react"
-import { map, build, home, personAdd, star } from "ionicons/icons"
+import { map, build, home, personAdd, star, refresh, lockClosed, exit } from "ionicons/icons"
 import { ClientController, ProfessionController } from "../../API/Endpoint";
 
 import styled from "styled-components";
@@ -20,6 +20,11 @@ const Card = styled(IonCard)`
 
 export default function Profile() {
 
+    const logOut = async () => {
+        await Preferences.remove({key: "api_key"});
+        nav.push("/reg", "root");
+    };
+
     const [user, setUser] = useState<any>({id: -1, firstName: "", lastName: "", email: "", level: 0, activeObject: {id: -1, workName: "", price: 0, workDescription: "", availableVacancies: 0, professions: []}, professions: []});
     const [allProfessions, setAllProfessions] = useState<any[]>([]);
 
@@ -30,9 +35,12 @@ export default function Profile() {
         setUser({
             id: clientData!.id, 
             firstName: clientData!.first_name, 
-            lastName: clientData!.surname, 
+            lastName: clientData!.surname,
+            middleName: clientData!.second_name,
             email: clientData!.email, 
-            level: clientData!.grade_up, 
+            level: clientData!.grade_up,
+            aboutMe: clientData!.about_me,
+            phoneNumber: clientData!.phone_number,
             activeObject: clientData.object_construction === null ? null : {
                 id: clientData!.object_construction!.id, 
                 workName: clientData!.object_construction!.work_name, 
@@ -94,13 +102,20 @@ export default function Profile() {
                 <IonContent>
                     <IonList>
                         <IonMenuToggle>
-                            <IonItem style={{"cursor": "pointer"}} onClick={goToMap}>
+                            <IonItem style={{"cursor": "pointer"}} onClick={user.level > 1 ? goToMap : undefined}>
                                 <IonIcon aria-hidden="true" icon={map} slot="start" />
                                 <IonLabel>Карта Партнеров</IonLabel>
+                                {(user.level < 2) &&
+                                    <IonIcon icon={lockClosed} slot="end"/>
+                                }
                             </IonItem>
                             <IonItem style={{"cursor": "pointer"}} onClick={goToVacancies}>
                                 <IonIcon aria-hidden="true" icon={personAdd} slot="start" />
                                 <IonLabel>Вакансии</IonLabel>
+                            </IonItem>
+                            <IonItem style={{"cursor": "pointer"}} onClick={logOut}>
+                                <IonIcon icon={exit} slot="start"></IonIcon>
+                                <IonLabel>Выйти</IonLabel>
                             </IonItem>
                         </IonMenuToggle>
                     </IonList>
@@ -114,13 +129,18 @@ export default function Profile() {
                         <IonButtons slot="start">
                             <IonMenuButton></IonMenuButton>
                         </IonButtons>
+
+                        <IonButtons slot="end">
+                            <IonButton onClick={loadData}><IonIcon icon={refresh}/></IonButton>
+                        </IonButtons>
                     </Toolbar>
                 </IonHeader>
                 <IonContent id="main-content" fullscreen>
-                    <ProfileCard user={user}></ProfileCard>
+                    <ProfileCard role="worker" user={user}></ProfileCard>
                     {user.activeObject && 
                         <>
-                            <VacancyCard data={user.activeObject} isAssigned={true}></VacancyCard>
+                            <IonTitle>Текущая задача:</IonTitle>
+                            <VacancyCard setUser={setUser} data={user.activeObject} isAssigned={true}></VacancyCard>
                         </>
                     }
                     <Card className="ion-padding">

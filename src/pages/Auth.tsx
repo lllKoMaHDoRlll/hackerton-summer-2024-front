@@ -14,6 +14,20 @@ export default function Auth() {
         password: useRef<HTMLIonInputElement>(null)
     });
 
+    const loginButtonHandler = async () => {
+        const emailValue = values.email.current!.value!.toString();
+        const passwordValue = values.password.current!.value!.toString();
+
+        const loginData = await AuthController.login(emailValue, passwordValue);
+        console.log(loginData);
+        if (loginData.role) {
+            nav.push("/worker/profile");
+        } else {
+            nav.push("employer/profile");
+        }
+
+    }
+
     const registerButton = useRef<HTMLIonButtonElement>(null);
 
     const onChangeCheck = (ev: any) => {
@@ -52,10 +66,10 @@ export default function Auth() {
                                 </IonItem>
                             </IonList>
                         </IonCardContent>
-                        <IonButton color="pink" fill="clear" expand="block" onClick={goToReg}>Зарегистрироваться</IonButton>
-                        <InButton ref={registerButton} expand="block" onClick={()=>AuthController.Login()}>Войти</InButton>
                     </Card>
-                </Wrapper>
+                    <IonButton fill="clear" expand="block" onClick={goToReg}>Зарегистрироваться</IonButton>
+                    <IonButton ref={registerButton} expand="block" onClick={loginButtonHandler}>Войти</IonButton>
+                    </Wrapper>
             </IonContent>
         </Page>
     )
