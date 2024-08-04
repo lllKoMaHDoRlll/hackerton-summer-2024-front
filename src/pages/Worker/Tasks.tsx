@@ -1,60 +1,52 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { IonBackButton, IonPage, IonTitle, IonHeader, IonToolbar, IonButtons, IonContent, IonCardContent, IonCard, IonList, IonItem, IonListHeader, IonLabel, IonCardHeader, IonCardTitle, IonCardSubtitle, IonButton } from "@ionic/react";
 
-import styled from "styled-components";
-import PartnerMap from "../../components/PartnersMap";
-import EducationalCourseCard from "../../components/EducationalCourseCard";
 import VacancyCard from "../../components/VacancyCard";
-
-const vacancies = [
-    {
-        id: 0,
-        workName: "Стройка",
-        workDescription: "Очень крутая стройка",
-        price: "4 000",
-        availableVacancies: 5,
-        professions: [
-            {
-                id: 0,
-                name: "Разнорабочий"
-            },
-            {
-                id: 0,
-                name: "Монтажник"
-            }
-        ]
-    },
-    {
-        id: 0,
-        workName: "Установка окон",
-        workDescription: "Иди сюда и установи мне окна",
-        price: "3 000",
-        availableVacancies: 3,
-        professions: [
-            {
-                id: 0,
-                name: "Разнорабочий"
-            }
-        ]
-    },
-];
+import { ClientController } from "../../API/Endpoint";
 
 export default function WorkerTasks() {
+    const [isAssigned, setIsAssigned] = useState<boolean>(false);
+    const [vacancies, setVacancies] = useState<any[]>([]);
+
+    useEffect(() => {
+        const f = async () => {
+            const clientData = await ClientController.getMe();
+            if (!!(clientData!.object_construction)) {
+                setIsAssigned(true);
+            }
+            const vacanciesData = await ClientController.getFeedObjects();
+            setVacancies(vacanciesData.objects_constructions.map((object:any) => {
+                return {
+                    id: object.id, 
+                    workName: object.work_name, 
+                    price: object.price, 
+                    workDescription: object.work_description,
+                    availableVacancies: object.available_vacancies,
+                    professions: object.professions.map((profession: any) => {
+                        return {id: profession.id,
+                        professionName: profession.profession_name};
+                    })
+                };
+            }))
+        };
+        f();
+    }, [])
+
     return (
         <IonPage>
             <IonHeader>
                 <IonToolbar>
                     <IonTitle>Доступные вакансии</IonTitle>
+                    <IonButtons slot="start">
+                        <IonBackButton></IonBackButton>
+                    </IonButtons>
                 </IonToolbar>
-                <IonButtons slot="start">
-                    <IonBackButton></IonBackButton>
-                </IonButtons>
             </IonHeader>
             <IonContent>
                 <IonList>
                     {vacancies.map((vacancy) => (
                         <IonItem>
-                            <VacancyCard data={vacancy}></VacancyCard>
+                            <VacancyCard doDisable={isAssigned} data={vacancy}></VacancyCard>
                         </IonItem>
                     ))} 
                 </IonList>

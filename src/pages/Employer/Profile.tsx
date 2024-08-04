@@ -1,22 +1,50 @@
-import { IonLabel, IonContent, IonHeader, IonMenu, IonPage, IonTitle, IonToolbar, IonButtons, IonMenuButton, IonList, IonItem, IonIcon, useIonRouter, IonMenuToggle } from "@ionic/react"
-import { build, home, personAdd } from "ionicons/icons"
+import { IonLabel, IonContent, IonHeader, IonMenu, IonPage, IonTitle, IonToolbar, IonButtons, IonMenuButton, IonList, IonItem, IonIcon, useIonRouter, IonMenuToggle, IonButton } from "@ionic/react"
+import { build, home, personAdd, refreshCircle } from "ionicons/icons"
 
 
 import ProfileCard from "./../../components/ProfileCard";
-
-const user = {
-    id: 0,
-    firstName: "Иван",
-    LastName: "Иванов",
-    email: "example@example.com"
-}
+import { useEffect, useState } from "react";
+import { CustomerController } from "../../API/Endpoint";
 
 export default function Profile() {
+
+    const [customer, setCustomer] = useState<any>({id: -1, firstName: "", lastName: "", secondName: "", email: "", objects: []});
     const nav = useIonRouter();
 
     const goToObjects = () => {
         nav.push("/employer/builder_projects");
     };
+
+    useEffect(() => {
+        const f = async ()=>{
+            const customerData = await CustomerController.getMe();
+            console.log(customerData);
+            
+            setCustomer({
+                id: customerData.id,
+                firstName: customerData.first_name,
+                lastName: customerData.surname,
+                secondName: customerData.second_name,
+                email: customerData.email,
+                objects: customerData.object_constructions.map((object: any) => {
+                    return {
+                        id: object.id,
+                        workName: object.work_name,
+                        price: object.price,
+                        workDescription: object.work_description,
+                        availableVacancies: object.available_vacancies,
+                        professions: object.professions.map((profession: any) => {
+                            return {
+                                id: profession.id,
+                                professionName: profession.profession_name
+                            };
+                        })
+                    };
+                })
+            });
+        }
+        f();
+    }, []);
 
     return (
         <>
@@ -55,7 +83,7 @@ export default function Profile() {
                     </IonToolbar>
                 </IonHeader>
                 <IonContent id="main-content" fullscreen>
-                    <ProfileCard user={user}></ProfileCard>
+                    <ProfileCard user={customer}></ProfileCard>
                 </IonContent>
             </IonPage>
         </>

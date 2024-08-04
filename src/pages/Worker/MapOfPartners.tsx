@@ -49,10 +49,10 @@ export default function MapOfPartners() {
             <IonHeader>
                 <IonToolbar>
                     <IonTitle>Карта партнеров</IonTitle>
+                    <IonButtons slot="start">
+                        <IonBackButton></IonBackButton>
+                    </IonButtons>
                 </IonToolbar>
-                <IonButtons slot="start">
-                    <IonBackButton></IonBackButton>
-                </IonButtons>
             </IonHeader>
             <IonContent>
                 <PartnerMap></PartnerMap>

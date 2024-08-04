@@ -19,25 +19,19 @@ export default function Reg() {
     const nav = useIonRouter();
     const goToAuth = ()=>nav.push('/auth');
 
-    const first_name = useRef<any>();
-    const surname = useRef<any>();
-    const second_name = useRef<any>();
-    const email = useRef<any>();
-    const password = useRef<any>();
-    const role = useRef<HTMLIonSelectElement>(null);
-
     const registerButtonHandler = async () => {
         try {
             await AuthController.Reg(
-                first_name.current.value, surname.current.value, second_name.current.value, email.current.value ,password.current.value, role.current!.value == "client" ? true : false 
+                values.firstName.current!.value!.toString(), values.lastName.current!.value!.toString(), values.middleName.current!.value!.toString(), values.email.current!.value!.toString(), values.password.current!.value!.toString(), values.role.current!.value == "worker" ? true : false 
             );
         } catch (ex) {
             console.log(ex);
             return;
         }
-        if (role.current!.value == "client") {
-            
+        if (values.role.current!.value == "worker") {
             nav.push("/worker/profile");
+        } else {
+            nav.push("employer/profile");
         }
         
     };
@@ -100,7 +94,7 @@ export default function Reg() {
                                     <IonInput ref={values.passwordRepeat} name="passwordRepeat" onInput={onChangeCheck} labelPlacement="floating" label="Повторите пароль" type="password"></IonInput>
                                 </IonItem>
                                 <IonItem className="ion-margin-bottom">
-                                    <IonSelect ref={values.role} name="role" label="Ваша роль" labelPlacement="floating"  onIonChange={onChangeCheck}>
+                                    <IonSelect ref={values.role} name="role" label="Ваша роль" labelPlacement="floating" onIonChange={onChangeCheck}>
                                         <IonSelectOption value='worker'>Рабочий</IonSelectOption>
                                         <IonSelectOption value='employer'>Работодатель</IonSelectOption>
                                     </IonSelect>
@@ -108,7 +102,7 @@ export default function Reg() {
                             </IonList>
                         </IonCardContent>
                         <IonButton fill="outline" expand="block" onClick={goToAuth}>У меня есть аккант</IonButton>
-                        <IonButton ref={registerButton} expand="block" disabled>Зарегистрироваться</IonButton>
+                        <IonButton ref={registerButton} expand="block" disabled onClick={registerButtonHandler}>Зарегистрироваться</IonButton>
                     </IonCard>
                     </Wrapper>
             </IonContent>

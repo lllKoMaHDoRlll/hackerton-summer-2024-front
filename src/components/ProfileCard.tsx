@@ -1,4 +1,5 @@
 import { IonCard, IonCardTitle, IonAvatar, IonCardContent } from "@ionic/react"
+import { useEffect } from "react";
 
 
 import styled from "styled-components";
@@ -14,7 +15,7 @@ export default function ProfileCard(props: any) {
                 <IonAvatar className="ion-margin-end">
                     <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg"/>
                 </IonAvatar>
-                {props.user.firstName} {props.user.LastName}
+                {props.user.firstName} {props.user.lastName}
             </ProfileCardTitle>
             <IonCardContent>email: {props.user.email}</IonCardContent>
         </IonCard>

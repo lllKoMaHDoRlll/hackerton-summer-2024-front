@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { IonLabel, IonContent, IonHeader, IonMenu, IonPage, IonTitle, IonToolbar, IonButton, IonButtons, IonMenuButton, IonCard, IonCardTitle, IonAvatar, IonCardContent, IonList, IonItem, IonIcon, IonChip, useIonRouter, IonMenuToggle, IonCardHeader, IonCardSubtitle } from "@ionic/react"
 import { map, build, home, personAdd, star } from "ionicons/icons"
-import { ClientController } from "../../API/Endpoint";
+import { ClientController, ProfessionController } from "../../API/Endpoint";
 
 import styled from "styled-components";
 
@@ -9,49 +9,62 @@ import ProfileCard from "./../../components/ProfileCard";
 import VacancyCard from "./../../components/VacancyCard";
 import LevelCard from "../../components/LevelCard";
 import { User } from "../../API/types/payload/User";
-
-const professions = [
-    { id: 0, name: "Сварщик", selected: true},
-    { name: "Каменщик", selected: false},
-    { name: "Плиточник", selected: false},
-    { name: "Электромонтер", selected: true},
-    { name: "Монтажник", selected: true},
-    { name: "Разнорабочий", selected: true}
-];
-
-const user: User = {
-    id: 0,
-    firstName: "Иван",
-    LastName: "Иванов",
-    email: "example@examle.com",
-    level: 2
-}
-
-const vacancy = {
-    id: 0,
-    workName: "Изготовление металлической фермы",
-    price: "5 000",
-    workDescription: "Изготволение фермы из металлических балок путим полуавтоматической сварки",
-    availableVacancies: 3,
-    professions: [
-        {
-            id: 0,
-            name: "Сварщик"
-        }
-    ]
-}
+import { Preferences } from "@capacitor/preferences";
 
 export default function Profile() {
-    const [user, setUser] = useState<User|null>(null);
-    useEffect(() => {
-        const f = async ()=>{
-            const clientData = await ClientController.getMe();
-        }
-        f();
-    }, [user]);
 
-    const handleProffesionSwitch = function (ev: any) {
-        ev.target.color = ev.target.color === 'dark' ? 'default' : 'dark';
+    const [user, setUser] = useState<any>({id: -1, firstName: "", lastName: "", email: "", level: 0, activeObject: {id: -1, workName: "", price: 0, workDescription: "", availableVacancies: 0, professions: []}, professions: []});
+    const [allProfessions, setAllProfessions] = useState<any[]>([]);
+
+    const loadData = async() => {
+        const clientData = await ClientController.getMe();
+        const allProfessionsData = await ProfessionController.getAll();
+        
+        setUser({
+            id: clientData!.id, 
+            firstName: clientData!.first_name, 
+            lastName: clientData!.surname, 
+            email: clientData!.email, 
+            level: clientData!.grade_up, 
+            activeObject: clientData.object_construction === null ? null : {
+                id: clientData!.object_construction!.id, 
+                workName: clientData!.object_construction!.work_name, 
+                price: clientData!.object_construction!.price, 
+                workDescription: clientData!.object_construction!.work_description, 
+                availableVacancies: clientData!.object_construction!.available_vacancies, 
+                professions: clientData!.object_construction!.professions.map((profession: any) => {
+                    return {
+                        id: profession.id,
+                        professionName: profession.profession_name
+                    };
+                })
+            }, 
+            professions: clientData!.professions.map((profession: any) => {
+                return {
+                    id: profession.id,
+                    professionName: profession.profession_name
+                }
+            })
+        });
+        console.log(user);
+        setAllProfessions(allProfessionsData.professions.map((professionData: any) => {
+            return {id: professionData.id, professionName: professionData.profession_name};
+        }));
+    }
+
+    useEffect(() => {
+        loadData();
+    }, []);
+
+    const handleProffesionSwitch = function (ev: any, professionId: number) {
+        if (ev.target.color === 'dark') {
+            ev.target.color = 'default';
+            ClientController.deleteProfession(professionId);
+        } else {
+            ev.target.color = 'dark';
+            ClientController.postProfession(professionId);
+        }
+        
     }
     const nav = useIonRouter();
 
@@ -97,10 +110,10 @@ export default function Profile() {
                 </IonHeader>
                 <IonContent id="main-content" fullscreen>
                     <ProfileCard user={user}></ProfileCard>
-                    {vacancy && 
+                    {user.activeObject && 
                         <>
                             <IonTitle>Текущая задача:</IonTitle>
-                            <VacancyCard data={vacancy} isAssigned={true}></VacancyCard>
+                            <VacancyCard data={user.activeObject} isAssigned={true}></VacancyCard>
                         </>
                     }
                     <IonCard className="ion-padding">
@@ -109,8 +122,8 @@ export default function Profile() {
                             <IonCardSubtitle>Для изменения нажмите на профессию</IonCardSubtitle>
                         </IonCardHeader>
                         <IonCardContent>
-                            {professions.map((profession) => (
-                                <IonChip onClick={handleProffesionSwitch} color={profession.selected ? 'dark' : 'default'}>{profession.name}</IonChip>
+                            {allProfessions.map((profession) => (
+                                <IonChip onClick={(ev) => handleProffesionSwitch(ev, profession.id)} color={user.professions.map((profession: any) => profession.id).includes(profession.id) ? 'dark' : 'default'}>{profession.professionName}</IonChip>
                             ))}
                         </IonCardContent>
                     </IonCard>

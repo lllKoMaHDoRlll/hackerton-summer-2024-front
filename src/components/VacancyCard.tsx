@@ -1,15 +1,28 @@
 import { useEffect } from "react";
-import { IonCard, IonCardTitle, IonCardContent, IonCardHeader, IonCardSubtitle, IonList, IonListHeader, IonLabel, IonItem, IonText, IonChip, IonButton } from "@ionic/react"
+import { IonCard, IonCardTitle, IonCardContent, IonCardHeader, IonCardSubtitle, IonList, IonListHeader, IonLabel, IonItem, IonText, IonChip, IonButton, useIonRouter } from "@ionic/react"
 import styled from "styled-components";
+import { ClientController, CustomerController } from "../API/Endpoint";
 
 const StyledCard = styled(IonCard)`
     width: 100%;
 `
 
-export default function ProfileCard(props: any) {
-    useEffect(() => {
-        console.log(props.isAssigned);
-    });
+const StyledItem = styled.div`
+    flex-wrap: wrap;
+    display: flex;
+`
+
+export default function VacancyCard(props: any) {
+    const nav = useIonRouter();
+    const buttonHandler = (objectId: number) => {
+        if (!props.isAssigned && !props.isOwnedByConsumer) {
+            ClientController.postGetWork(objectId);
+            nav.push("/worker/profile");
+        } else if (props.isOwnedByConsumer) {
+            CustomerController.deleteObject(objectId);
+            nav.push("employer/profile");
+        }
+    };
 
     return (
         <StyledCard className="ion-padding">
@@ -30,11 +43,11 @@ export default function ProfileCard(props: any) {
                             Требуемые профессии:
                         </IonLabel>
                     </IonListHeader>
-                    <IonItem>
+                    <StyledItem className="ion-wrap">
                         {props.data.professions.map((profession: any) => (
-                            <IonChip>{profession.name}</IonChip>
+                            <IonChip>{profession.professionName}</IonChip>
                         ))}
-                    </IonItem>
+                    </StyledItem>
                     {props.isOwnedByConsumer && 
                         <IonItem>
                             <IonButton id={"modal-id-" + props.data.id} expand="block" fill="outline">Просмотреть рабочих</IonButton>
@@ -42,7 +55,7 @@ export default function ProfileCard(props: any) {
                     }
                 </IonList>
             </IonCardContent>
-            <IonButton expand="block">{(props.isAssigned || props.isOwnedByConsumer) ? 'Отменить' : 'Откликнуться'}</IonButton>
+            <IonButton onClick={() => {buttonHandler(props.data.id)}} expand="block" disabled={props.doDisable}>{(props.isAssigned || props.isOwnedByConsumer) ? 'Отменить' : 'Откликнуться'}</IonButton>
             
         </StyledCard>
     )
