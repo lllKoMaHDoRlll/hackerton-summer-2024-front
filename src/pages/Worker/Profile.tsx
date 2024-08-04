@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { createContext, useEffect, useLayoutEffect, useState } from "react";
 import { IonLabel, IonContent, IonHeader, IonMenu, IonPage, IonTitle, IonToolbar, IonButton, IonButtons, IonMenuButton, IonCard, IonCardTitle, IonAvatar, IonCardContent, IonList, IonItem, IonIcon, IonChip, useIonRouter, IonMenuToggle, IonCardHeader, IonCardSubtitle } from "@ionic/react"
-import { map, build, home, personAdd, star } from "ionicons/icons"
+import { map, build, home, personAdd, star, refresh, lockClosed } from "ionicons/icons"
 import { ClientController, ProfessionController } from "../../API/Endpoint";
 
 import styled from "styled-components";
@@ -87,9 +87,12 @@ export default function Profile() {
                 <IonContent>
                     <IonList>
                         <IonMenuToggle>
-                            <IonItem style={{"cursor": "pointer"}} onClick={goToMap}>
+                            <IonItem style={{"cursor": "pointer"}} onClick={user.level > 1 ? goToMap : undefined}>
                                 <IonIcon aria-hidden="true" icon={map} slot="start" />
                                 <IonLabel>Карта Партнеров</IonLabel>
+                                {(user.level < 2) &&
+                                    <IonIcon icon={lockClosed} slot="end"/>
+                                }
                             </IonItem>
                             <IonItem style={{"cursor": "pointer"}} onClick={goToVacancies}>
                                 <IonIcon aria-hidden="true" icon={personAdd} slot="start" />
@@ -106,6 +109,9 @@ export default function Profile() {
                         <IonButtons slot="start">
                             <IonMenuButton></IonMenuButton>
                         </IonButtons>
+                        <IonButtons slot="end">
+                            <IonButton onClick={loadData}><IonIcon icon={refresh}/></IonButton>
+                        </IonButtons>
                     </IonToolbar>
                 </IonHeader>
                 <IonContent id="main-content" fullscreen>
@@ -113,7 +119,7 @@ export default function Profile() {
                     {user.activeObject && 
                         <>
                             <IonTitle>Текущая задача:</IonTitle>
-                            <VacancyCard data={user.activeObject} isAssigned={true}></VacancyCard>
+                            <VacancyCard setUser={setUser} data={user.activeObject} isAssigned={true}></VacancyCard>
                         </>
                     }
                     <IonCard className="ion-padding">

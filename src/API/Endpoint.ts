@@ -4,10 +4,7 @@ import axios from "axios";
 
 export class AuthController {
     static async Reg(_first_name: string, _surname: string, _second_name:string, _email: string, _password: string, _role: boolean) {
-        //Проверяем платформу, на которой запущено приложение
-        const platforms = getPlatforms();
-        if (platforms.includes("desktop")) {
-            const query = await axios.post("http://localhost:8000/api/auth/register",
+        const query = await axios.post("http://localhost:8000/api/auth/register",
             {
                 first_name: _first_name, surname: _surname,
                 second_name: _second_name, password: _password, role: _role, email: _email
@@ -16,21 +13,17 @@ export class AuthController {
                 headers: {"Access-Control-Allow-Origin": "*"},
             }
         );
-            try {
-                const data: RegResp = await query.data;
-                console.log(data);
+        try {
+            const data: RegResp = await query.data;
+            console.log(data);
 
-                //Сохраняем апи-ключ локально
-                await Preferences.set({
-                    key: 'api_key',
-                    value: data.api_key
-                })
-            } catch(error) {
-                alert("Ошибка в ответе");
-            }
-            
-        } else {
-
+            //Сохраняем апи-ключ локально
+            await Preferences.set({
+                key: 'api_key',
+                value: data.api_key
+            })
+        } catch(error) {
+            alert("Ошибка в ответе");
         }
     }
 
@@ -42,114 +35,116 @@ export class AuthController {
 export class ClientController {
     static async getMe() {
         const apiKey = (await Preferences.get({key: "api_key"})).value;
-
-        const platforms = getPlatforms();
-        if (platforms.includes("desktop")) {
-            const query = await axios.get("http://localhost:8000/api/client/me",
-            {
-                headers: {
-                    "Access-Control-Allow-Origin": "*",
-                    "api-key": apiKey
-                },
-            }
-        );
-            try {
-                const data = await query.data;
-                console.log(data);
-                return data;
-            } catch(error) {
-                alert("Ошибка в ответе");
-            }
-            
-        } else {
-
+        const query = await axios.get("http://localhost:8000/api/client/me",
+        {
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                "api-key": apiKey
+            },
         }
+        );
+        try {
+            const data = await query.data;
+            console.log(data);
+            return data;
+        } catch(error) {
+            alert("Ошибка в ответе");
+        }
+
     }
 
     static async postProfession(profession_id: number) {
-        const platforms = getPlatforms();
         const apiKey = (await Preferences.get({key: "api_key"})).value;
-        if (platforms.includes("desktop")) {
-            const query = await axios.post(`http://localhost:8000/api/client/profession/${profession_id}`,
+        const query = await axios.post(`http://localhost:8000/api/client/profession/${profession_id}`,
             {},
             {
                 headers: {"Access-Control-Allow-Origin": "*", "api-key": apiKey},
             }
         );
-            try {
-                const data = await query.data;
-                return data;
-            } catch(error) {
-                alert("Ошибка в ответе");
-            }
-            
-        } else {
-
+        try {
+            const data = await query.data;
+            return data;
+        } catch(error) {
+            alert("Ошибка в ответе");
         }
     }
 
     static async deleteProfession(profession_id: number) {
-        const platforms = getPlatforms();
         const apiKey = (await Preferences.get({key: "api_key"})).value;
-        if (platforms.includes("desktop")) {
-            const query = await axios.delete(`http://localhost:8000/api/client/profession/${profession_id}`,
+        const query = await axios.delete(`http://localhost:8000/api/client/profession/${profession_id}`,
             {
                 headers: {"Access-Control-Allow-Origin": "*", "api-key": apiKey},
             }
         );
-            try {
-                const data = await query.data;
-                return data;
-            } catch(error) {
-                alert("Ошибка в ответе");
-            }
-            
-        } else {
-
+        try {
+            const data = await query.data;
+            return data;
+        } catch(error) {
+            alert("Ошибка в ответе");
         }
     }
 
     static async getFeedObjects() {
-        const platforms = getPlatforms();
         const apiKey = (await Preferences.get({key: "api_key"})).value;
-        if (platforms.includes("desktop")) {
-            const query = await axios.get(`http://localhost:8000/api/client/feed/object-construction`,
+        const query = await axios.get(`http://localhost:8000/api/client/feed/object-construction`,
             {
                 headers: {"Access-Control-Allow-Origin": "*", "api-key": apiKey},
             }
         );
-            try {
-                const data = await query.data;
-                return data;
-            } catch(error) {
-                alert("Ошибка в ответе");
-            }
-            
-        } else {
-
+        try {
+            const data = await query.data;
+            return data;
+        } catch(error) {
+            alert("Ошибка в ответе");
         }
     }
 
     static async postGetWork(objectId: number) {
-        const platforms = getPlatforms();
         const apiKey = (await Preferences.get({key: "api_key"})).value;
-        if (platforms.includes("desktop")) {
-            const query = await axios.post(`http://localhost:8000/api/client/get_work/${objectId}`,
+        const query = await axios.post(`http://localhost:8000/api/client/get_work/${objectId}`,
             {},
             {
                 headers: {"Access-Control-Allow-Origin": "*", "api-key": apiKey},
             }
         );
-            try {
-                const data = await query.data;
-                return data;
-                console.log(data);
-            } catch(error) {
-                alert("Ошибка в ответе");
-            }
-            
-        } else {
+        try {
+            const data = await query.data;
+            return data;
+            console.log(data);
+        } catch(error) {
+            alert("Ошибка в ответе");
+        }
+    }
 
+    static async deleteWork(objectId: number) {
+        const apiKey = (await Preferences.get({key: "api_key"})).value;
+        const query = await axios.delete(`http://localhost:8000/api/client/delete_work/${objectId}`,
+            {
+                headers: {"Access-Control-Allow-Origin": "*", "api-key": apiKey},
+            }
+        );
+        try {
+            const data = await query.data;
+            console.log(data);
+            return data;
+        } catch(error) {
+            alert("Ошибка в ответе");
+        }
+    }
+    static async putGradeUp() {
+        const apiKey = (await Preferences.get({key: "api_key"})).value;
+        const query = await axios.put(`http://localhost:8000/api/client/level-up/`,
+            {},
+            {
+                headers: {"Access-Control-Allow-Origin": "*", "api-key": apiKey},
+            }
+        );
+        try {
+            const data = await query.data;
+            console.log(data);
+            return data;
+        } catch(error) {
+            alert("Ошибка в ответе");
         }
     }
 }
@@ -157,10 +152,7 @@ export class ClientController {
 export class CustomerController {
     static async getMe() {
         const apiKey = (await Preferences.get({key: "api_key"})).value;
-
-        const platforms = getPlatforms();
-        if (platforms.includes("desktop")) {
-            const query = await axios.get("http://localhost:8000/api/customer/me",
+        const query = await axios.get("http://localhost:8000/api/customer/me",
             {
                 headers: {
                     "Access-Control-Allow-Origin": "*",
@@ -168,24 +160,18 @@ export class CustomerController {
                 },
             }
         );
-            try {
-                const data = await query.data;
-                return data;
-            } catch(error) {
-                alert("Ошибка в ответе");
-            }
-            
-        } else {
-
+        try {
+            const data = await query.data;
+            return data;
+        } catch(error) {
+            alert("Ошибка в ответе");
         }
+
     }
 
     static async getObjectInfo(objectId: number) {
         const apiKey = (await Preferences.get({key: "api_key"})).value;
-
-        const platforms = getPlatforms();
-        if (platforms.includes("desktop")) {
-            const query = await axios.get(`http://localhost:8000/api/customer/info/object-construction/${objectId}`,
+        const query = await axios.get(`http://localhost:8000/api/customer/info/object-construction/${objectId}`,
             {
                 headers: {
                     "Access-Control-Allow-Origin": "*",
@@ -193,24 +179,17 @@ export class CustomerController {
                 },
             }
         );
-            try {
-                const data = await query.data;
-                return data;
-            } catch(error) {
-                alert("Ошибка в ответе");
-            }
-            
-        } else {
-
+        try {
+            const data = await query.data;
+            return data;
+        } catch(error) {
+            alert("Ошибка в ответе");
         }
     }
 
     static async createObject(workName: string, workDescription: string, price: number, availableVacancies: number, professions: any) {
-        //Проверяем платформу, на которой запущено приложение
-        const platforms = getPlatforms();
         const apiKey = (await Preferences.get({key: "api_key"})).value;
-        if (platforms.includes("desktop")) {
-            const query = await axios.post("http://localhost:8000/api/customer/new/object-construction",
+        const query = await axios.post("http://localhost:8000/api/customer/new/object-construction",
             {
                 work_name: workName, work_description: workDescription, price: price, 
                 available_vacancies: availableVacancies, 
@@ -220,37 +199,26 @@ export class CustomerController {
                 headers: {"Access-Control-Allow-Origin": "*", "api-key": apiKey},
             }
         );
-            try {
-                const data = await query.data;
-                return data;
-            } catch(error) {
-                alert("Ошибка в ответе");
-            }
-            
-        } else {
-
+        try {
+            const data = await query.data;
+            return data;
+        } catch(error) {
+            alert("Ошибка в ответе");
         }
     }
 
     static async deleteObject(objectId: number) {
-        //Проверяем платформу, на которой запущено приложение
-        const platforms = getPlatforms();
         const apiKey = (await Preferences.get({key: "api_key"})).value;
-        if (platforms.includes("desktop")) {
-            const query = await axios.delete(`http://localhost:8000/api/customer/delete/object-construction/${objectId}`,
+        const query = await axios.delete(`http://localhost:8000/api/customer/delete/object-construction/${objectId}`,
             {
                 headers: {"Access-Control-Allow-Origin": "*", "api-key": apiKey},
             }
         );
-            try {
-                const data = await query.data;
-                return data;
-            } catch(error) {
-                alert("Ошибка в ответе");
-            }
-            
-        } else {
-
+        try {
+            const data = await query.data;
+            return data;
+        } catch(error) {
+            alert("Ошибка в ответе");
         }
     }
 }
@@ -258,10 +226,7 @@ export class CustomerController {
 export class ProfessionController {
     static async getAll() {
         const apiKey = (await Preferences.get({key: "api_key"})).value;
-
-        const platforms = getPlatforms();
-        if (platforms.includes("desktop")) {
-            const query = await axios.get("http://localhost:8000/api/profession/all",
+        const query = await axios.get("http://localhost:8000/api/profession/all",
             {
                 headers: {
                     "Access-Control-Allow-Origin": "*",
@@ -269,15 +234,11 @@ export class ProfessionController {
                 },
             }
         );
-            try {
-                const data = await query.data;
-                return data;
-            } catch(error) {
-                alert("Ошибка в ответе");
-            }
-            
-        } else {
-
+        try {
+            const data = await query.data;
+            return data;
+        } catch(error) {
+            alert("Ошибка в ответе");
         }
     }
 }

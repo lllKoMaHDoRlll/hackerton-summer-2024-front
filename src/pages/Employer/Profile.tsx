@@ -57,18 +57,18 @@ export default function Profile() {
                 <IonContent>
                     <IonList>
                         <IonMenuToggle>
-                            <IonItem style={{"cursor": "pointer"}}>
+                            {/* <IonItem style={{"cursor": "pointer"}}>
                                 <IonIcon aria-hidden="true" icon={build} slot="start" />
                                 <IonLabel>Рабочиe</IonLabel>
-                            </IonItem>
+                            </IonItem> */}
                             <IonItem style={{"cursor": "pointer"}} onClick={goToObjects}>
                                 <IonIcon aria-hidden="true" icon={home} slot="start" />
                                 <IonLabel>Объекты</IonLabel>
                             </IonItem>
-                            <IonItem style={{"cursor": "pointer"}}>
+                            {/* <IonItem style={{"cursor": "pointer"}}>
                                 <IonIcon aria-hidden="true" icon={personAdd} slot="start" />
                                 <IonLabel>Вакансии</IonLabel>
-                            </IonItem>
+                            </IonItem> */}
                         </IonMenuToggle>
                     </IonList>
                 </IonContent>

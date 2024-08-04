@@ -1,11 +1,7 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { IonCard, IonCardTitle, IonCardContent, IonCardHeader, IonCardSubtitle, IonList, IonListHeader, IonLabel, IonItem, IonText, IonChip, IonButton, useIonRouter } from "@ionic/react"
 import styled from "styled-components";
 import { ClientController, CustomerController } from "../API/Endpoint";
-
-const StyledCard = styled(IonCard)`
-    width: 100%;
-`
 
 const StyledItem = styled.div`
     flex-wrap: wrap;
@@ -20,12 +16,16 @@ export default function VacancyCard(props: any) {
             nav.push("/worker/profile");
         } else if (props.isOwnedByConsumer) {
             CustomerController.deleteObject(objectId);
-            nav.push("employer/profile");
+            nav.push("/employer/profile");
+        } else if (props.isAssigned) {
+            ClientController.deleteWork(objectId);
+            location.reload();
+            nav.push("/worker/tasks");
         }
     };
 
     return (
-        <StyledCard className="ion-padding">
+        <IonCard style={{"width": props.isAssigned? "" : "100%"}} className="ion-padding">
             <IonCardHeader>
                 <IonCardSubtitle>Оплата: {props.data.price} руб.</IonCardSubtitle>
                 <IonCardTitle>{props.data.workName}</IonCardTitle>
@@ -57,6 +57,6 @@ export default function VacancyCard(props: any) {
             </IonCardContent>
             <IonButton onClick={() => {buttonHandler(props.data.id)}} expand="block" disabled={props.doDisable}>{(props.isAssigned || props.isOwnedByConsumer) ? 'Отменить' : 'Откликнуться'}</IonButton>
             
-        </StyledCard>
+        </IonCard>
     )
 }
