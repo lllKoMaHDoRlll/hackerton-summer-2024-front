@@ -3,18 +3,9 @@ import React, { useRef, useState } from "react";
 import { IonButton, IonContent, IonInput, IonList, IonPage,IonHeader, IonToolbar, IonTitle, IonCard, IonItem, IonSelect, IonSelectOption, useIonRouter, IonCardHeader, IonCardTitle, IonCardContent } from "@ionic/react";
 import styled from "styled-components";
 import {AuthController,  ClientController } from "../API/Endpoint";
-
-const Wrapper = styled.div`
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
-    @media screen and (width > 500px) {
-        max-width: 500px;
-    }
-`
-
+import { Card, InButton, Title, Wrapper } from "../styles/pages/Auth_and_Reg";
+import Lights from "../styles/components/lights";
+import {Page} from "../styles/pages/Auth_and_Reg";
 export default function Reg() {
     const nav = useIonRouter();
     const goToAuth = ()=>nav.push('/auth');
@@ -61,15 +52,17 @@ export default function Reg() {
     }
 
     return (
-        <IonPage>
+        <Page>
             <IonHeader>
                 <IonToolbar>
-                    <IonTitle>Регистрация</IonTitle>
+                        <Title>
+                            <Lights/>
+                        </Title>
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
                 <Wrapper>
-                    <IonCard className="ion-padding">
+                    <Card>
                         <IonCardHeader>
                             <IonCardTitle>Регистрация</IonCardTitle>
                         </IonCardHeader>
@@ -102,10 +95,10 @@ export default function Reg() {
                             </IonList>
                         </IonCardContent>
                         <IonButton fill="outline" expand="block" onClick={goToAuth}>У меня есть аккант</IonButton>
-                        <IonButton ref={registerButton} expand="block" disabled onClick={registerButtonHandler}>Зарегистрироваться</IonButton>
-                    </IonCard>
+                        <InButton ref={registerButton} expand="block" disabled onClick={registerButtonHandler}>Зарегистрироваться</InButton>
+                    </Card>
                     </Wrapper>
             </IonContent>
-        </IonPage>
+        </Page>
     )
 }

@@ -2,18 +2,8 @@ import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import { IonButton, IonContent, IonInput, IonList, IonPage,IonHeader, IonToolbar, IonTitle, IonCard, IonItem, IonCardHeader, IonCardContent, useIonRouter, IonCardTitle } from "@ionic/react";
 import {AuthController} from "../API/Endpoint";
-
-
-const Wrapper = styled.div`
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
-    @media screen and (width > 500px) {
-        max-width: 500px;
-    }
-`
+import { Card, InButton, Page, Title, Wrapper } from "../styles/pages/Auth_and_Reg";
+import Lights from "../styles/components/lights";
 
 export default function Auth() {
     const nav = useIonRouter();
@@ -36,15 +26,17 @@ export default function Auth() {
     }
 
     return (
-        <IonPage>
+        <Page>
             <IonHeader>
                 <IonToolbar>
-                    <IonTitle>Вход</IonTitle>
+                    <Title>
+                        <Lights/>
+                    </Title>
                 </IonToolbar>
             </IonHeader>
-            <IonContent fullscreen>
+            <IonContent>
                 <Wrapper>
-                    <IonCard>
+                    <Card>
                         <IonCardHeader>
                             <IonCardTitle>
                                 Войти
@@ -60,11 +52,11 @@ export default function Auth() {
                                 </IonItem>
                             </IonList>
                         </IonCardContent>
-                    </IonCard>
-                    <IonButton fill="clear" expand="block" onClick={goToReg}>Зарегистрироваться</IonButton>
-                    <IonButton ref={registerButton} expand="block" onClick={()=>AuthController.Login()}>Войти</IonButton>
-                    </Wrapper>
+                        <IonButton color="pink" fill="clear" expand="block" onClick={goToReg}>Зарегистрироваться</IonButton>
+                        <InButton ref={registerButton} expand="block" onClick={()=>AuthController.Login()}>Войти</InButton>
+                    </Card>
+                </Wrapper>
             </IonContent>
-        </IonPage>
+        </Page>
     )
 }
