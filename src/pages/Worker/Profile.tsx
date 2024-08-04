@@ -10,6 +10,9 @@ import VacancyCard from "./../../components/VacancyCard";
 import LevelCard from "../../components/LevelCard";
 import { User } from "../../API/types/payload/User";
 import { Preferences } from "@capacitor/preferences";
+import { Page } from "../../styles/pages/Page";
+import Lights from "../../styles/components/lights";
+import { Toolbar } from "../../styles/WorkerProfile";
 
 export default function Profile() {
 
@@ -99,14 +102,15 @@ export default function Profile() {
                     </IonList>
                 </IonContent>
             </IonMenu>
-            <IonPage>
+            <Page>
                 <IonHeader>
-                    <IonToolbar>
-                        <IonTitle>Профиль</IonTitle>
+                    <Toolbar>
+                        <Lights/>
+                        {/* <IonTitle>Профиль</IonTitle> */}
                         <IonButtons slot="start">
                             <IonMenuButton></IonMenuButton>
                         </IonButtons>
-                    </IonToolbar>
+                    </Toolbar>
                 </IonHeader>
                 <IonContent id="main-content" fullscreen>
                     <ProfileCard user={user}></ProfileCard>
@@ -129,7 +133,7 @@ export default function Profile() {
                     </IonCard>
                     <LevelCard level={user?.level}></LevelCard>
                 </IonContent>
-            </IonPage>
+            </Page>
         </>
     )
 }
