@@ -12,7 +12,11 @@ import { User } from "../../API/types/payload/User";
 import { Preferences } from "@capacitor/preferences";
 import { Page } from "../../styles/pages/Page";
 import Lights from "../../styles/components/lights";
-import { Toolbar } from "../../styles/WorkerProfile";
+import { Toolbar } from "../../styles/pages/WorkerProfile";
+
+const Card = styled(IonCard)`
+    --background: white;
+`
 
 export default function Profile() {
 
@@ -116,11 +120,10 @@ export default function Profile() {
                     <ProfileCard user={user}></ProfileCard>
                     {user.activeObject && 
                         <>
-                            <IonTitle>Текущая задача:</IonTitle>
                             <VacancyCard data={user.activeObject} isAssigned={true}></VacancyCard>
                         </>
                     }
-                    <IonCard className="ion-padding">
+                    <Card className="ion-padding">
                         <IonCardHeader>
                             <IonCardTitle>Ваши профессии</IonCardTitle>
                             <IonCardSubtitle>Для изменения нажмите на профессию</IonCardSubtitle>
@@ -130,7 +133,7 @@ export default function Profile() {
                                 <IonChip onClick={(ev) => handleProffesionSwitch(ev, profession.id)} color={user.professions.map((profession: any) => profession.id).includes(profession.id) ? 'dark' : 'default'}>{profession.professionName}</IonChip>
                             ))}
                         </IonCardContent>
-                    </IonCard>
+                    </Card>
                     <LevelCard level={user?.level}></LevelCard>
                 </IonContent>
             </Page>

@@ -4,6 +4,11 @@ import styled from "styled-components";
 
 const StyledCard = styled(IonCard)`
     width: 100%;
+    --background: white
+`
+
+const Button = styled(IonButton)`
+    --background: pink;
 `
 
 export default function EducationalCourseCard(props: any) {
@@ -20,7 +25,7 @@ export default function EducationalCourseCard(props: any) {
                     <p>Стоимость: {props.price} руб.</p>
                 </div>
             </IonCardContent>
-            <IonButton expand="block">Связаться</IonButton>
+            <Button expand="block">Связаться</Button>
         </StyledCard>
     )
 }

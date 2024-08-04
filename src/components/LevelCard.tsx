@@ -1,11 +1,16 @@
 import { IonCardContent, IonCard, IonCardHeader, IonCardTitle, IonButton, IonText, IonLabel, IonGrid, IonRow, IonCol, IonImg } from "@ionic/react";
 import { usePhotoGallery } from '../hooks/usePhotoGallery';
+import styled from "styled-components";
+
+const Card = styled(IonCard)`
+    --background: white;
+`
 
 export default function LevelCard(props: any) {
     const { photos, takePhoto } = usePhotoGallery();
 
     return (
-        <IonCard className="ion-padding">
+        <Card className="ion-padding">
             <IonCardHeader>
                 <IonCardTitle>Текущий уровень: {props.level}</IonCardTitle>
             </IonCardHeader>
@@ -23,6 +28,6 @@ export default function LevelCard(props: any) {
                 </IonGrid>
             </IonCardContent>
             <IonButton expand="block" onClick={() => takePhoto()}>Загрузить фото диплома</IonButton>
-        </IonCard>
+        </Card>
     )
 }

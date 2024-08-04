@@ -2,6 +2,8 @@ import { IonBackButton, IonPage, IonTitle, IonHeader, IonToolbar, IonButtons, Io
 
 import PartnerMap from "../../components/PartnersMap";
 import EducationalCourseCard from "../../components/EducationalCourseCard";
+import { Page } from "../../styles/pages/Page";
+import { Title } from "../../styles/pages/Map";
 
 
 
@@ -45,10 +47,10 @@ const courses = [
 
 export default function MapOfPartners() {
     return (
-        <IonPage>
+        <Page>
             <IonHeader>
                 <IonToolbar>
-                    <IonTitle>Карта партнеров</IonTitle>
+                    <Title>Карта партнеров</Title>
                     <IonButtons slot="start">
                         <IonBackButton></IonBackButton>
                     </IonButtons>
@@ -70,6 +72,6 @@ export default function MapOfPartners() {
                     ))} 
                 </IonList>
             </IonContent>
-        </IonPage>
+        </Page>
     )
 }

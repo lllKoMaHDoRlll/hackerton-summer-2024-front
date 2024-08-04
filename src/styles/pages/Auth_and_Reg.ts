@@ -30,4 +30,5 @@ export const InButton = styled(IonButton)`
 export const Title = styled(IonTitle)`
     display: flex;
     flex-direction: row;
+    --color: #E892D7
 `

@@ -2,14 +2,23 @@ import { useEffect } from "react";
 import { IonCard, IonCardTitle, IonCardContent, IonCardHeader, IonCardSubtitle, IonList, IonListHeader, IonLabel, IonItem, IonText, IonChip, IonButton, useIonRouter } from "@ionic/react"
 import styled from "styled-components";
 import { ClientController, CustomerController } from "../API/Endpoint";
+import { Title } from "../styles/pages/Auth_and_Reg";
 
 const StyledCard = styled(IonCard)`
     width: 100%;
+    --background: white;
 `
 
 const StyledItem = styled.div`
     flex-wrap: wrap;
     display: flex;
+`
+
+const Item = styled(IonItem)`
+    --background: white;
+`
+const List = styled(IonList)`
+    --background: white;
 `
 
 export default function VacancyCard(props: any) {
@@ -26,23 +35,24 @@ export default function VacancyCard(props: any) {
 
     return (
         <StyledCard className="ion-padding">
+            <Title>Текущая задача:</Title>
             <IonCardHeader>
                 <IonCardSubtitle>Оплата: {props.data.price} руб.</IonCardSubtitle>
                 <IonCardTitle>{props.data.workName}</IonCardTitle>
             </IonCardHeader>
             <IonCardContent>
-                <IonList>
-                    <IonItem>
+                <List>
+                    <Item>
                         <IonText>Описание: {props.data.workDescription}</IonText>
-                    </IonItem>
-                    <IonItem>
+                    </Item>
+                    <Item>
                         <IonText> Доступных мест: {props.data.availableVacancies}</IonText>
-                    </IonItem>
-                    <IonListHeader>
-                        <IonLabel>
+                    </Item>
+                    
+                        <Item>
                             Требуемые профессии:
-                        </IonLabel>
-                    </IonListHeader>
+                        </Item>
+                   
                     <StyledItem className="ion-wrap">
                         {props.data.professions.map((profession: any) => (
                             <IonChip>{profession.professionName}</IonChip>
@@ -53,7 +63,7 @@ export default function VacancyCard(props: any) {
                             <IonButton id={"modal-id-" + props.data.id} expand="block" fill="outline">Просмотреть рабочих</IonButton>
                         </IonItem>
                     }
-                </IonList>
+                </List>
             </IonCardContent>
             <IonButton onClick={() => {buttonHandler(props.data.id)}} expand="block" disabled={props.doDisable}>{(props.isAssigned || props.isOwnedByConsumer) ? 'Отменить' : 'Откликнуться'}</IonButton>
             
