@@ -23,9 +23,12 @@ export default function Profile() {
         setUser({
             id: clientData!.id, 
             firstName: clientData!.first_name, 
-            lastName: clientData!.surname, 
+            lastName: clientData!.surname,
+            middleName: clientData!.second_name,
             email: clientData!.email, 
-            level: clientData!.grade_up, 
+            level: clientData!.grade_up,
+            aboutMe: clientData!.about_me,
+            phoneNumber: clientData!.phone_number,
             activeObject: clientData.object_construction === null ? null : {
                 id: clientData!.object_construction!.id, 
                 workName: clientData!.object_construction!.work_name, 
@@ -115,7 +118,7 @@ export default function Profile() {
                     </IonToolbar>
                 </IonHeader>
                 <IonContent id="main-content" fullscreen>
-                    <ProfileCard user={user}></ProfileCard>
+                    <ProfileCard role="worker" user={user}></ProfileCard>
                     {user.activeObject && 
                         <>
                             <IonTitle>Текущая задача:</IonTitle>

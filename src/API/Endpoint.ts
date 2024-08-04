@@ -27,8 +27,35 @@ export class AuthController {
         }
     }
 
-    static Login() {
-        //Проверяем платформу
+    static async login(email: string, password: string) {
+        const query = await axios.post("http://localhost:8000/api/auth/login",
+            {
+                email: email, password: password
+            },
+            {
+                headers: {"Access-Control-Allow-Origin": "*"},
+            }
+        );
+        try {
+            const data: RegResp = await query.data;
+
+            //Сохраняем апи-ключ локально
+            await Preferences.set({
+                key: 'api_key',
+                value: data.api_key
+            })
+
+            let role = null;
+            try {
+                const clientData = await ClientController.getMe();
+                
+            } catch (ex) {
+                alert(ex);
+            }
+
+        } catch(error) {
+            alert("Ошибка в ответе");
+        }
     }
 }
 
@@ -51,6 +78,27 @@ export class ClientController {
             alert("Ошибка в ответе");
         }
 
+    }
+
+    static async putMe(firstName: string, surname: string, secondName: string, email: string, gradeUp: number, phoneNumber: string, aboutMe: string) {
+        const apiKey = (await Preferences.get({key: "api_key"})).value;
+        const query = await axios.put("http://localhost:8000/api/client/me",
+        {
+            first_name: firstName, surname: surname, second_name: secondName, email: email, grade_up: gradeUp, phone_number: phoneNumber, about_me: aboutMe
+        },
+        {
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                "api-key": apiKey
+            },
+        }
+        );
+        try {
+            const data = await query.data;
+            return data;
+        } catch(error) {
+            alert("Ошибка в ответе");
+        }
     }
 
     static async postProfession(profession_id: number) {

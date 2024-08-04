@@ -24,6 +24,10 @@ export default function Auth() {
         password: useRef<HTMLIonInputElement>(null)
     });
 
+    const loginButtonHandler = () => {
+        
+    }
+
     const registerButton = useRef<HTMLIonButtonElement>(null);
 
     const onChangeCheck = (ev: any) => {
@@ -62,7 +66,7 @@ export default function Auth() {
                         </IonCardContent>
                     </IonCard>
                     <IonButton fill="clear" expand="block" onClick={goToReg}>Зарегистрироваться</IonButton>
-                    <IonButton ref={registerButton} expand="block" onClick={()=>AuthController.Login()}>Войти</IonButton>
+                    <IonButton ref={registerButton} expand="block" onClick={loginButtonHandler}>Войти</IonButton>
                     </Wrapper>
             </IonContent>
         </IonPage>
