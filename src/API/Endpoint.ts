@@ -37,21 +37,15 @@ export class AuthController {
             }
         );
         try {
-            const data: RegResp = await query.data;
+            const data = await query.data;
+            console.log(data);
 
             //Сохраняем апи-ключ локально
             await Preferences.set({
                 key: 'api_key',
                 value: data.api_key
             })
-
-            let role = null;
-            try {
-                const clientData = await ClientController.getMe();
-                
-            } catch (ex) {
-                alert(ex);
-            }
+            return data;
 
         } catch(error) {
             alert("Ошибка в ответе");

@@ -1,12 +1,18 @@
 import { IonLabel, IonContent, IonHeader, IonMenu, IonPage, IonTitle, IonToolbar, IonButtons, IonMenuButton, IonList, IonItem, IonIcon, useIonRouter, IonMenuToggle, IonButton } from "@ionic/react"
-import { build, home, personAdd, refreshCircle } from "ionicons/icons"
+import { build, exit, home, personAdd, refreshCircle } from "ionicons/icons"
 
 
 import ProfileCard from "./../../components/ProfileCard";
 import { useEffect, useState } from "react";
 import { CustomerController } from "../../API/Endpoint";
+import { Preferences } from "@capacitor/preferences";
 
 export default function Profile() {
+
+    const logOut = async () => {
+        await Preferences.remove({key: "api_key"});
+        nav.push("/reg", "root");
+    };
 
     const [customer, setCustomer] = useState<any>({id: -1, firstName: "", lastName: "", secondName: "", email: "", objects: []});
     const nav = useIonRouter();
@@ -57,18 +63,14 @@ export default function Profile() {
                 <IonContent>
                     <IonList>
                         <IonMenuToggle>
-                            {/* <IonItem style={{"cursor": "pointer"}}>
-                                <IonIcon aria-hidden="true" icon={build} slot="start" />
-                                <IonLabel>Рабочиe</IonLabel>
-                            </IonItem> */}
                             <IonItem style={{"cursor": "pointer"}} onClick={goToObjects}>
                                 <IonIcon aria-hidden="true" icon={home} slot="start" />
                                 <IonLabel>Объекты</IonLabel>
                             </IonItem>
-                            {/* <IonItem style={{"cursor": "pointer"}}>
-                                <IonIcon aria-hidden="true" icon={personAdd} slot="start" />
-                                <IonLabel>Вакансии</IonLabel>
-                            </IonItem> */}
+                            <IonItem style={{"cursor": "pointer"}} onClick={logOut}>
+                                <IonIcon icon={exit} slot="start"></IonIcon>
+                                <IonLabel>Выйти</IonLabel>
+                            </IonItem>
                         </IonMenuToggle>
                     </IonList>
                 </IonContent>

@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useLayoutEffect, useState } from "react";
 import { IonLabel, IonContent, IonHeader, IonMenu, IonPage, IonTitle, IonToolbar, IonButton, IonButtons, IonMenuButton, IonCard, IonCardTitle, IonAvatar, IonCardContent, IonList, IonItem, IonIcon, IonChip, useIonRouter, IonMenuToggle, IonCardHeader, IonCardSubtitle } from "@ionic/react"
-import { map, build, home, personAdd, star, refresh, lockClosed } from "ionicons/icons"
+import { map, build, home, personAdd, star, refresh, lockClosed, exit } from "ionicons/icons"
 import { ClientController, ProfessionController } from "../../API/Endpoint";
 
 import styled from "styled-components";
@@ -12,6 +12,11 @@ import { User } from "../../API/types/payload/User";
 import { Preferences } from "@capacitor/preferences";
 
 export default function Profile() {
+
+    const logOut = async () => {
+        await Preferences.remove({key: "api_key"});
+        nav.push("/reg", "root");
+    };
 
     const [user, setUser] = useState<any>({id: -1, firstName: "", lastName: "", email: "", level: 0, activeObject: {id: -1, workName: "", price: 0, workDescription: "", availableVacancies: 0, professions: []}, professions: []});
     const [allProfessions, setAllProfessions] = useState<any[]>([]);
@@ -100,6 +105,10 @@ export default function Profile() {
                             <IonItem style={{"cursor": "pointer"}} onClick={goToVacancies}>
                                 <IonIcon aria-hidden="true" icon={personAdd} slot="start" />
                                 <IonLabel>Вакансии</IonLabel>
+                            </IonItem>
+                            <IonItem style={{"cursor": "pointer"}} onClick={logOut}>
+                                <IonIcon icon={exit} slot="start"></IonIcon>
+                                <IonLabel>Выйти</IonLabel>
                             </IonItem>
                         </IonMenuToggle>
                     </IonList>
