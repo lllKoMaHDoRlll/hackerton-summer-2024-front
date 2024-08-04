@@ -1,7 +1,7 @@
 import { Redirect, Route } from 'react-router-dom';
 import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import Welcome from './pages/Welcome2.0';
+import Welcome from './pages/Welcome';
 import WorkerProfile from './pages/Worker/Profile';
 import WorkerTasks from './pages/Worker/Tasks';
 import CurrentTasks from './pages/Worker/Tasks';
